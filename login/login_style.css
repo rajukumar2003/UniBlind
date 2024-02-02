@@ -160,7 +160,7 @@ input[type="password"] {
 
 label[for="mail"],
 label[for="pass"] {
-  max-width: 66.666%;
+  max-width: max-content;
   color: #ccc;
 }
 
