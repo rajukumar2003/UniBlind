@@ -4,14 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="/login/login_style.css" class="css" />
+    <link rel="stylesheet" href="/UniBlind/login/login_style.css" class="css" />
   </head>
   <body>
     <div class="background-container">
-      <img src="/login/login.svg" alt="Background Image" class="bgimage" />
+      <img
+        src="/UniBlind/login/login.svg"
+        alt="Background Image"
+        class="bgimage"
+      />
     </div>
     <div class="nav">
-      <img src="/Signup/logo.svg" />
+      <img src="/UniBlind/Signup/logo.svg" />
       <div class="links">
         <a href="#">About Us</a>
         <a href="#">Features</a>
@@ -23,34 +27,38 @@
       <div class="innerpanel">
         <div class="login">Log in</div>
         <div class="form">
-          <div class="field">
-            <input
-              type="text"
-              name="mail"
-              id="mail"
-              placeholder="mail"
-              autofill="autofill"
-            />
-            <label for="mail">Enter Your University Mail</label>
-          </div>
-          <div class="field">
-            <input type="password" name="pass" id="pass" placeholder="pass" />
-            <label for="pass">Password</label>
-          </div>
-          <button type="button">Login</button>
-          <div class="divider">
-            <span></span>
-            OR
-            <span></span>
-          </div>
-          <button type="button">
-            <div class="inbutton">
-              <p>Login with Google</p>
-              <img src="/login/google.png" />
+          <form>
+            <div class="field">
+              <input
+                type="text"
+                name="mail"
+                id="mail"
+                placeholder="mail"
+                autofill="autofill"
+              />
+              <label for="mail">Enter Your University Mail</label>
             </div>
-          </button>
+            <div class="field">
+              <input type="password" name="pass" id="pass" placeholder="pass" />
+              <label for="pass">Password</label>
+            </div>
+            <button type="button">Login</button>
+            <div class="divider">
+              <span></span>
+              OR
+              <span></span>
+            </div>
+            <button type="button">
+              <div class="inbutton">
+                <p>Login with Google</p>
+                <img src="/UniBlind/login/google.png" />
+              </div>
+            </button>
+          </form>
         </div>
-        <p class="Signin">New User? <a href="/Signup/Signup.html">Sign Up</a></p>
+        <p class="Signin">
+          New User? <a href="/UniBlind/Signup/Signup.html">Sign Up</a>
+        </p>
       </div>
     </div>
   </body>
