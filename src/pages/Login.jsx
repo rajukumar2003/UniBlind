@@ -5,7 +5,7 @@ import LoginPanel from "../Components/LoginPanel";
 const Login = () => {
   return (
     <section className="h-screen bg-my-gradient">
-      <div className=" bg-Loginbg h-screen bg-no-repeat">
+      <div className=" bg-Loginbg bg-no-repeat">
         <nav className="bg-transparent py-4 px-8">
           <div className="flex items-center">
             <img src={Logo} alt="Logo" className="h-8" />
@@ -14,7 +14,7 @@ const Login = () => {
             </span>
           </div>
         </nav>
-        <div className="bg-white">
+        <div className="flex bg-white">
           <LoginPanel />
         </div>
       </div>

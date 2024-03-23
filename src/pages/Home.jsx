@@ -9,7 +9,7 @@ const Home = () => {
         <section>
           <Navbar />
         </section>
-        <section className="my-auto">
+        <section className="">
           <Hero />
         </section>
       </div>
