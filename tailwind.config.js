@@ -11,6 +11,7 @@ export default {
       backgroundImage: {
         Loginbg: "url('./src/assets/Images/Login_bg.svg')",
         Landbg: "url('./src/assets/Images/Landing_bg.svg')",
+        Signupbg: "url('./src/assets/Images/Signup_bg.svg')",
 
         "my-gradient":
           "linear-gradient(315deg, hsla(212, 78%, 79%, 1) 46%, hsla(294, 48%, 55%, 1) 73%, hsla(11, 100%, 82%, 1) 86%, hsla(0, 0%, 100%, 1) 100%);",
