@@ -12,7 +12,7 @@ const Navbar = () => {
   return (
     <header className=" bg-transparent p-4 flex justify-between items-center">
       <div>
-        <img src={Logo} alt="UniBLind Logo" className="h-8 mr-2" />
+        <img src={Logo} alt="UniBLind Logo" className=" mr-2 h-12 w-auto" />
       </div>
       <nav>
         <ul className="flex space-x-4">

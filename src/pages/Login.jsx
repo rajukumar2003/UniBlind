@@ -1,5 +1,6 @@
 import React from "react";
 import { Logo } from "../assets/Icons";
+import LoginPanel from "../Components/LoginPanel";
 
 const Login = () => {
   return (
@@ -13,7 +14,9 @@ const Login = () => {
             </span>
           </div>
         </nav>
-        <div className="">{/* Component */}</div>
+        <div className="bg-white">
+          <LoginPanel />
+        </div>
       </div>
     </section>
   );
