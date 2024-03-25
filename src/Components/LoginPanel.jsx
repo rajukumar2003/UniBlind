@@ -1,14 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import { GoogleIcon } from "../assets/Icons";
 import { Link } from "react-router-dom";
+import { auth } from "../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+
 const LoginPanel = () => {
+
+  const navigate = useNavigate();
+
+  // States--------------------------------------------------
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  
+  // Form Submit--------------------------------------------------
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        navigate('/dashboard');
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorCode, errorMessage);
+      });
+  };
+
+
+
   return (
     <div id="outerpanel" className="flex bg-white m-4 rounded-xl">
       <div id="innerpanel" className="p-4 min-w-fit min-h-fit">
         <p className=" font-semibold text-4xl text-center mb-5">Log in</p>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="relative z-0 w-full mb-5 group">
             <input
+              onChange={(e) => { setEmail(e.target.value); }}
               type="email"
               name="floating_email"
               id="floating_email"
@@ -17,7 +46,7 @@ const LoginPanel = () => {
               required
             />
             <label
-              for="floating_email"
+              htmlFor="floating_email"
               className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
               Email address
@@ -25,6 +54,7 @@ const LoginPanel = () => {
           </div>
           <div className="relative z-0 w-full mb-5 group">
             <input
+              onChange={(e) => { setPassword(e.target.value); }}
               type="password"
               name="floating_password"
               id="login_password"
@@ -33,7 +63,7 @@ const LoginPanel = () => {
               required
             />
             <label
-              for="floating_password"
+              htmlFor="floating_password"
               className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
               Password
@@ -46,11 +76,10 @@ const LoginPanel = () => {
                 type="checkbox"
                 value=""
                 className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-                required
               />
             </div>
             <label
-              for="remember"
+              htmlFor="remember"
               className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
             >
               Remember me
