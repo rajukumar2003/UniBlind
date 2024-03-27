@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { GoogleIcon } from "../assets/Icons";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from '../firebase';
-import { useNavigate } from "react-router-dom";
+import { db, auth } from '../firebase';
+import { doc, setDoc, collection, query, where, getDocs } from "firebase/firestore"; 
+import { generateRandomUsername } from "../anonymousNames";
 
 const SignupPanel = () => {
 
@@ -13,38 +14,65 @@ const SignupPanel = () => {
 	const [password, setPassword] = useState('');
 	const [repassword, setRepassword] = useState('');
 
-	// Firebase Google Sign In-------------------------------------------------------------------
+	// Function to add user with random username------------------------------------------
+	async function addUserWithRandomUsername(uid, email) {
+		let generatedUsername = generateRandomUsername();
+		let isUsernameUnique = false;
+		// Checking if username is unique
+		while (!isUsernameUnique) {
+			const q = query(collection(db, "users"), where("username", "==", generatedUsername));
+			const usernameExists = (await getDocs(q)).empty;
+			if (usernameExists) {
+				isUsernameUnique = true;
+			} else {
+				generatedUsername = generateRandomUsername();
+			}
+		}
+		// Adding user to database
+		const userDocRef = doc(db, "users", uid);
+		await setDoc(userDocRef, {
+			email: email,
+			username: generatedUsername
+		});
+		console.log("User added to database with random username: ", generatedUsername);
+	}
+
+	// Signin using Google -------------------------------------------------------------------
 	const provider = new GoogleAuthProvider();
 	provider.setCustomParameters({ prompt: 'select_account' });
-
 	const googleSignIn = async () => {
 		try {
-			await signInWithPopup(auth, provider);
+			const result = await signInWithPopup(auth, provider);
+			const user = result.user;
+			await addUserWithRandomUsername(user.uid, user.email); 
 			navigate('/dashboard')
 		} catch (error) {
 			alert(error);
 		};
 	};
 	
-	// Form Submit-------------------------------------------------------------------
-	const handleSubmit = (e) => {
+	// Signup using From -------------------------------------------------------------------
+	const handleSubmit = async(e) => {
 		e.preventDefault();
 		if (password !== repassword) {
 			alert("Passwords do not match");
 			return;
 		}
-		// Firebase Sign Up
-		createUserWithEmailAndPassword(auth, email, password)
-			.then((userCredential) => {
-				navigate('/dashboard')
-			})
-			.catch((error) => {
-				const errorCode = error.code;
-				const errorMessage = error.message;
-				alert(errorCode, errorMessage);
-			});
+		try {
+			const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+			const user = userCredential.user.uid;
+			await addUserWithRandomUsername(user, email);
+			
+			navigate('/dashboard');
+		}
+		catch (error) {
+			const errorCode = error.code;
+			const errorMessage = error.message;
+			alert(errorCode, errorMessage);
+		}
 	};
 	
+
 
 	return (
 		
