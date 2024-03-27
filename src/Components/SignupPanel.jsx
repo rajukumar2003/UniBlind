@@ -58,6 +58,17 @@ const SignupPanel = () => {
 			alert("Passwords do not match");
 			return;
 		}
+
+		// Validate email and password
+		const functionResult = await functions.httpsCallable('validateSignupData')({
+			email,
+			password,
+		});
+		if (!functionResult.data.valid) {
+			alert(functionResult.data.error);
+			return;
+		}
+		// If email and password are valid, create user
 		try {
 			const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 			const user = userCredential.user.uid;
