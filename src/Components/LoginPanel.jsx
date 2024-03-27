@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { GoogleIcon } from "../assets/Icons";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 const LoginPanel = () => {
@@ -12,6 +12,18 @@ const LoginPanel = () => {
   // States--------------------------------------------------
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  // Signin using Google -------------------------------------------------------------------
+  const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: 'select_account' });
+  const googleSignIn = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      navigate('/dashboard')
+    } catch (error) {
+      alert(error);
+    };
+  };
   
   // Form Submit--------------------------------------------------
   const handleSubmit = (e) => {
@@ -100,6 +112,7 @@ const LoginPanel = () => {
             <span className="w-16 md:w-20 lg:w-24 border-b-2 border-black inline-block"></span>
           </div>
           <button
+            onClick={googleSignIn}
             type="submit"
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
