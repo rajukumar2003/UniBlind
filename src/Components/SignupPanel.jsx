@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { GoogleIcon } from "../assets/Icons";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 import { signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from "firebase/auth";
 import { db, auth } from '../firebase';
 import { doc, setDoc, collection, query, where, getDocs } from "firebase/firestore"; 
