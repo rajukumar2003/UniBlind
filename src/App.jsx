@@ -1,4 +1,3 @@
-import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
@@ -7,19 +6,26 @@ import ForgotPass from "./pages/ForgotPass";
 import WebNorms from "./pages/WebNorms";
 import PostForm from "./Components/PostForm";
 import Dashboard from "./pages/Dashboard";
+import { useState } from "react";
+import { UserProvider } from "./userContext";
+
 
 export default function App() {
+  const [isPostFormOpen, setIsPostFormOpen] = useState(false);
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/post" element={<PostForm isOpen={true} />} />
-        <Route path="/forgotpassword" element={<ForgotPass />} />
-        <Route path="/webnorms" element={<WebNorms />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
-    </BrowserRouter>
+    <UserProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/post" element={<PostForm isOpen={isPostFormOpen} onClose={() => setIsPostFormOpen(false)} />} />
+          <Route path="/forgotpassword" element={<ForgotPass />} />
+          <Route path="/webnorms" element={<WebNorms />} />
+          <Route path="/dashboard" element={<Dashboard isPostFormOpen={isPostFormOpen} setIsPostFormOpen={setIsPostFormOpen} />} />
+        </Routes>
+        </BrowserRouter>
+    </UserProvider>
   );
 }

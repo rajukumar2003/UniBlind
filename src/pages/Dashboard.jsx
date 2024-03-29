@@ -5,8 +5,13 @@ import { events, posts } from "../Constans";
 import PostCard from "../Components/PostCard";
 import EventCard from "../Components/EventCard";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Dashboard = () => {
+const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
+
+  const navigate = useNavigate();
+
+
   return (
     <main>
       <nav className="bg-[#B4D4FF] top-0 w-full h-100 flex z-10 fixed">
@@ -65,7 +70,10 @@ const Dashboard = () => {
               />
               <p className=" text-white text-2xl my-auto">Video Meeting</p>
             </div>
-            <button>
+            <button onClick={() => {
+              navigate("/post");
+              setIsPostFormOpen(true);
+            }}>
               <div className="flex flex-row mx-auto">
                 <img
                   src={Addpost}

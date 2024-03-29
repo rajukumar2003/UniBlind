@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db } from '../firebase';
+import { useNavigate } from 'react-router-dom';
+import { useUserContext } from '../userContext'
 
 const postsCollectionRef = collection(db, 'posts');
 
@@ -11,7 +13,10 @@ const PostForm = ({ isOpen, onClose }) => {
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
+    const { username } = useUserContext();
     const fileInputRef = useRef(null);
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -37,16 +42,17 @@ const PostForm = ({ isOpen, onClose }) => {
                 title,
                 description,
                 imagePath: imageUrl,
-                createdAt: Date.now(), // Or use server timestamp
-                // randomUsername: generateRandomUsername() // Assuming you have this function
+                createdAt: new Date(), 
+                username: username 
             });
-
-            // Reset form (Your existing code) 
+            alert("Post created Successfully");
+            // Reset form 
             setTitle('');
             setDescription('');
             setImage(null);
             setImagePreview(null);
             onClose();
+            navigate("/dashboard");
 
         } catch (error) {
             console.error("Error submitting post:", error);
@@ -75,7 +81,7 @@ const PostForm = ({ isOpen, onClose }) => {
                 </div>
 
                 <div className="content-container w-2/3 p-2">
-                    <button className="absolute top-3 right-3 text-2xl font-semibold" onClick={onClose}>
+                    <button className="absolute top-3 right-3 text-2xl font-semibold" onClick={() => { onClose; navigate("/dashboard")}}>
                         &times;
                     </button>
 
