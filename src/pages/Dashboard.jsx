@@ -4,7 +4,7 @@ import { Addpost, GroupChat, Logo, Proom, Vidchat } from "../assets/Icons";
 import { events, posts } from "../Constans";
 import PostCard from "../Components/PostCard";
 import EventCard from "../Components/EventCard";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const Dashboard = () => {
   return (
@@ -65,16 +65,18 @@ const Dashboard = () => {
               />
               <p className=" text-white text-2xl my-auto">Video Meeting</p>
             </div>
-            <div className="flex flex-row mx-auto">
-              <img
-                src={Addpost}
-                alt="Add post icon"
-                className="mr-10"
-                width={70}
-                height={70}
-              />
-              <p className=" text-white text-2xl my-auto">Add Post</p>
-            </div>
+            <button>
+              <div className="flex flex-row mx-auto">
+                <img
+                  src={Addpost}
+                  alt="Add post icon"
+                  className="mr-10"
+                  width={70}
+                  height={70}
+                />
+                <p className=" text-white text-2xl my-auto">Add Post</p>
+              </div>
+            </button>
             <p className=" text-white text-2xl m-auto">Back</p>
           </div>
         </section>
