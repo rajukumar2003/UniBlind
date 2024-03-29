@@ -15,6 +15,8 @@ export default {
 
         "my-gradient":
           "linear-gradient(315deg, hsla(212, 78%, 79%, 1) 46%, hsla(294, 48%, 55%, 1) 73%, hsla(11, 100%, 82%, 1) 86%, hsla(0, 0%, 100%, 1) 100%);",
+        "button-gradient":
+          "linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(84,157,255,1) 100%);",
       },
     },
   },
