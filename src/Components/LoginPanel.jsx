@@ -138,7 +138,7 @@ const LoginPanel = () => {
           </div>
         </form>
 
-        <p className=" mt-3 border-t-2 border-black">
+        <p className=" mt-3 border-t-2 border-black text-sm">
           New User?{" "}
           <Link to="/signup" className=" underline">
             Sign Up
