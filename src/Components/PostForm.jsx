@@ -1,5 +1,9 @@
 import React, { useState, useRef } from 'react';
-import axios from 'axios';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { db } from '../firebase';
+
+const postsCollectionRef = collection(db, 'posts');
 
 const PostForm = ({ isOpen, onClose }) => {
     
@@ -11,28 +15,42 @@ const PostForm = ({ isOpen, onClose }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const postData = new FormData(); // Create form data to handle images
-        postData.append('title', title);
-        postData.append('description', description);
-        postData.append('image', image);
 
+        // 1. Image Upload (If Image Exists)
+        let imageUrl = null;
+        if (image) {
+            try {
+                const storage = getStorage();
+                const imageRef = ref(storage, `postImages/${image.name}`);
+                const uploadResult = await uploadBytes(imageRef, image);
+                imageUrl = await getDownloadURL(imageRef);
+            } catch (error) {
+                console.error("Error uploading image:", error);
+                // Handle image upload error (e.g., display alert)
+                return; // Consider stopping form submission on image upload error 
+            }
+        }
+
+        // 2. Store Post in Firestore
         try {
-            // Assuming your deployed function endpoint is like this:
-            const functionUrl = 'https://your-project-id.cloudfunctions.net/api/post';
-            const response = await axios.post(functionUrl, postData, {
-                headers: { 'Content-Type': 'multipart/form-data' } // Required for image upload 
+            await addDoc(postsCollectionRef, {
+                title,
+                description,
+                imagePath: imageUrl,
+                createdAt: Date.now(), // Or use server timestamp
+                // randomUsername: generateRandomUsername() // Assuming you have this function
             });
 
-            console.log(response.data); // Log the response from your Cloud Function
-
-            // Reset form and close modal 
+            // Reset form (Your existing code) 
             setTitle('');
             setDescription('');
             setImage(null);
+            setImagePreview(null);
             onClose();
+
         } catch (error) {
             console.error("Error submitting post:", error);
-            // Handle error (e.g., display an alert message to the user)
+            // Handle general Firestore error (e.g., display alert)
         }
     };
 
