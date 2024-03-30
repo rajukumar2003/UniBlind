@@ -1,8 +1,6 @@
 import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from "../firebase";
-// import { useUserContext } from "../userContext";
 
-// const { setUserId } = useUserContext();
 
 export const handleEmailSignup = async (email, password) => {
     try {
@@ -19,7 +17,8 @@ export const handleGoogleSignup = async () => {
 
     try {
         const result = await signInWithPopup(auth, provider);
-        return result.user.uid; 
+        const user = result.user;
+        return user;
     } catch (error) {
         throw error;
     }

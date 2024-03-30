@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, doc, getDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
@@ -37,12 +37,20 @@ const PostForm = ({ isOpen, onClose }) => {
         }
 
         // 2. Store Post in Firestore
+        console.log('userId:', userId);  // Debugging
         try {
+            const userDocRef = doc(db, 'users', userId);
+            const userDocSnap = await getDoc(userDocRef);
+            if (!userDocSnap.exists()) { 
+                throw new Error("User not found in database");
+            };
+            const { username } = userDocSnap.data();
             await addDoc(postsCollectionRef, {
                 title,
                 description,
                 imagePath: imageUrl,
                 createdAt: new Date(), 
+                username: username,
                 userId: userId
             });
             alert("Post created Successfully");

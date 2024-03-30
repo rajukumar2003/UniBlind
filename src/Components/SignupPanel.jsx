@@ -1,57 +1,35 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { GoogleIcon } from "../assets/Icons";
 import { Link, useNavigate } from "react-router-dom";
-import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword,} from "firebase/auth";
-import { db, auth } from "../firebase";
-import { doc, setDoc, collection, query, where, getDocs, } from "firebase/firestore";
-import { generateRandomUsername } from "../anonymousNames";
+import { db } from "../firebase";
 import { useUserContext } from "../userContext";
 import { validateEmail } from "../emailValidation";
 import { initAuthListener, handleEmailSignup, handleGoogleSignup } from './authUtils'; 
+import { addUserWithRandomUsername } from './addUserWithRandomName';
+
 
 const SignupPanel = () => {
-  const navigate = useNavigate();
-  // States variables -------------------------------------------------------------------
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [repassword, setRepassword] = useState("");
-  const { setuserId } = useUserContext();
+	const navigate = useNavigate();
+	// States variables -------------------------------------------------------------------
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [repassword, setRepassword] = useState("");
+	const { setuserId } = useUserContext();
 
-  // Function to add user with random username------------------------------------------
-  async function addUserWithRandomUsername(uid, email) {
-    let generatedUsername = generateRandomUsername();
-    let isUsernameUnique = false;
-    // Checking if username is unique
-    while (!isUsernameUnique) {
-      const q = query(
-        collection(db, "users"),
-        where("username", "==", generatedUsername)
-      );
-      const usernameExists = (await getDocs(q)).empty;
-      if (usernameExists) {
-        isUsernameUnique = true;
-      } else {
-        generatedUsername = generateRandomUsername();
-      }
-	  }
-    // Adding user to database
-    const userDocRef = doc(db, "users", uid);
-    await setDoc(userDocRef, {
-      email: email,
-      username: generatedUsername,
-	});
-	setuserId(uid);   //Setting userID to context api
-    alert("Signup Successful")
-  }
+	// Setting up Auth Listener
+	useEffect(() => {
+	const unsubscribe = initAuthListener(setuserId);
+	return unsubscribe;  // Important for cleanup
+	}, []); 
 
 	// Signin using Google -------------------------------------------------------------------
 	const googleSignIn = async () => {
 		try {
-			const userId = await handleGoogleSignup();
-			await addUserWithRandomUsername(userId, user.email); 
+			const user = await handleGoogleSignup();
+			await addUserWithRandomUsername(user.uid, user.email, setuserId); 
 			navigate("/dashboard");
 		} catch (error) {
-			alert(error);
+			console.log(error);
 		}
 	};
 
@@ -61,28 +39,23 @@ const SignupPanel = () => {
     if (password !== repassword) {
       alert("Passwords do not match");
       return;
-	}
-	// Email Validation
-	const validationResult = validateEmail(email);
-	if (!validationResult.valid) {
-		alert(validationResult.message);
-		return;
-	}
+	  }
+	// Email Validation-------------------------------------------------------------------
+	// const validationResult = validateEmail(email);
+	// if (!validationResult.valid) {
+	// 	alert(validationResult.message);
+	// 	return;
+	// }
 	
 	  try {
 		  const userId = await handleEmailSignup(email, password);
-		  await addUserWithRandomUsername(userId, email);
+		  await addUserWithRandomUsername(userId, email, setuserId);
 		  navigate("/dashboard");
 	  } catch (error) {
 		  const errorCode = error.code;
 		  const errorMessage = error.message;
 		  alert(errorCode, errorMessage);
 	  }
-	// Setting up Auth Listener
-	  useEffect(() => {
-		  const unsubscribe = initAuthListener(setuserId);
-		  return unsubscribe;  // Important for cleanup
-	  }, []); 
   };
 
   return (

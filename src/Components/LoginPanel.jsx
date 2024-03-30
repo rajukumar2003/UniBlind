@@ -2,29 +2,28 @@ import React, { useState } from "react";
 import { GoogleIcon } from "../assets/Icons";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase";
-import {
-  signInWithPopup,
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../userContext";
+import { handleGoogleSignup } from "./authUtils";
+import { addUserWithRandomUsername } from "./addUserWithRandomName";
+
 
 const LoginPanel = () => {
   const navigate = useNavigate();
 
-  // States--------------------------------------------------
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setuserId } = useUserContext();
 
   // Signin using Google -------------------------------------------------------------------
-  const provider = new GoogleAuthProvider();
-  provider.setCustomParameters({ prompt: "select_account" });
   const googleSignIn = async () => {
     try {
-      const result = await signInWithPopup(auth, provider);
+      const user = await handleGoogleSignup();
+      await addUserWithRandomUsername(user.uid, user.email, setuserId);
       navigate("/dashboard");
     } catch (error) {
-      alert(error);
+      console.log(error);
     }
   };
 
@@ -34,6 +33,7 @@ const LoginPanel = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
+        localStorage.setItem('userId', user.uid); 
         navigate("/dashboard");
       })
       .catch((error) => {

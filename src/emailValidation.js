@@ -3,7 +3,7 @@ export const validateEmail = (email) => {
     if (!emailRegex.test(email)) {
         return {
             valid: false,
-            message: "Invalid email or not a .christuniversity.in domain"
+            message: "Only Christ University email addresses are allowed."
         };
     }
     return { valid: true };

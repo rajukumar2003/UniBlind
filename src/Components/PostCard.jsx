@@ -1,6 +1,6 @@
 import { upvoteicon } from "../assets/Icons";
 
-const PostCard = ({ imgURL, title, message, upvote }) => {
+const PostCard = ({ imgURL, title, message, upvote, username }) => {
   return (
     <div className="flex flex-row justify-center mb-10">
       <div>
@@ -24,6 +24,8 @@ const PostCard = ({ imgURL, title, message, upvote }) => {
           />
           <p className="text-xl text-slate-gray">({upvote})</p>
         </div>
+        <em className="text-xl text-slate-gray">by {username}</em>
+
       </div>
     </div>
   );
