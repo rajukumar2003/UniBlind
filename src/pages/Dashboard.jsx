@@ -75,10 +75,12 @@ const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
             </div>
           </div>
           {/*  */}
-          <div className=" card w-fit mx-auto py-5 px-12 rounded-lg">
-            <p className="text-center text-2xl text-black font-semibold">
-              University
-            </p>
+          <div className=" glass w-fit mx-auto border-white border-2 rounded-lg">
+            <div className=" grad py-4 px-8 rounded-lg">
+              <p className="text-center text-2xl text-white font-semibold font-montserrat">
+                UNIVERSITY
+              </p>
+            </div>
           </div>
 
           <div className=" flex flex-col border-2 glass m-4">
@@ -90,7 +92,7 @@ const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
                 width={50}
                 height={50}
               />
-              <p className=" text-white text-xl text-left my-auto">
+              <p className=" text-white text-xl text-left my-auto font-montserrat font-semibold">
                 Group Chat
               </p>
             </div>
@@ -102,7 +104,7 @@ const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
                 width={50}
                 height={50}
               />
-              <p className=" text-white text-xl text-left my-auto">
+              <p className=" text-white text-xl text-left my-auto font-montserrat font-semibold">
                 Private Room
               </p>
             </div>
@@ -114,7 +116,7 @@ const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
                 width={50}
                 height={50}
               />
-              <p className=" text-white text-xl text-left my-auto">
+              <p className=" text-white text-xl text-left my-auto font-montserrat font-semibold">
                 Video Meeting
               </p>
             </div>
@@ -132,14 +134,14 @@ const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
                   width={50}
                   height={50}
                 />
-                <p className=" text-white text-xl text-left my-auto">
+                <p className=" text-white text-xl text-left my-auto font-montserrat font-semibold">
                   Add Post
                 </p>
               </div>
             </button>
             <button
               onClick={logoutButton}
-              className=" text-white font-medium py-2 px-5 rounded-full shadow-md"
+              className=" text-white font-medium py-2 px-5 rounded-full shadow-md font font-montserrat font-semibold"
             >
               Logout
             </button>
@@ -166,10 +168,12 @@ const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
           </div>
         </section>
         <section className="flex-1 bg-[#86B6F6] w-1/5 h-screen fixed right-0">
-          <div className=" mt-20 card w-fit mx-auto py-5 px-12 rounded-lg mb-5">
-            <p className="text-center text-2xl text-black font-semibold">
-              University Events
-            </p>
+          <div className="mt-20 glass w-fit mx-auto rounded-lg mb-5 border-2 border-white">
+            <div className=" rounded-lg grad py-3 px-5">
+              <p className="text-center text-2xl text-white font-semibold font-montserrat">
+                UNIVERSITY EVENTS
+              </p>
+            </div>
           </div>
 
           {/*  */}
@@ -189,7 +193,7 @@ const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
 
           {/*  */}
 
-          <div className="text-xl glass text-white flex flex-col items-center m-5 border-2 border-white rounded-lg py-5">
+          <div className="text-xl glass text-white flex flex-col items-center m-5 border-2 border-white rounded-lg py-5 font-montserrat">
             <Link to="/">Feedback</Link>
             <Link to="/">Help</Link>
             <Link to="/">Customer Care</Link>

@@ -4,10 +4,10 @@ const EventCard = ({ imgURL, org, date, venue, title }) => {
       <img
         src={imgURL}
         alt="Event image"
-        className="rounded-full w-[80px] h-[80px] mr-5"
+        className="rounded-full w-[60px] h-[60px] mr-3"
       />
       <div className="ml-5 flex flex-col my-auto">
-        <h3 className="">{title}</h3>
+        <h3 className=" font-montserrat font-semibold">{title}</h3>
         <p className=" text-xs">{org}</p>
         <p className="text-xs">{date}</p>
         <p className=" text-xs">{venue}</p>
