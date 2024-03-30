@@ -7,7 +7,7 @@ const PostCard = ({ imgURL, title, message, upvote, username }) => {
         <img
           src={imgURL}
           alt="post image"
-          className="rounded-md object-cover w-[300px] h-[200px] shadow-lg mr-10"
+          className="rounded-md object-contain  w-[300px] h-[200px] shadow-lg mr-10"
         />
       </div>
 
@@ -25,7 +25,6 @@ const PostCard = ({ imgURL, title, message, upvote, username }) => {
           <p className="text-xl text-slate-gray">({upvote})</p>
         </div>
         <em className="text-xl text-slate-gray">by {username}</em>
-
       </div>
     </div>
   );
