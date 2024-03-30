@@ -13,7 +13,7 @@ const PostForm = ({ isOpen, onClose }) => {
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
-    const { username } = useUserContext();
+    const { userId } = useUserContext();
     const fileInputRef = useRef(null);
 
     const navigate = useNavigate();
@@ -43,7 +43,7 @@ const PostForm = ({ isOpen, onClose }) => {
                 description,
                 imagePath: imageUrl,
                 createdAt: new Date(), 
-                username: username 
+                userId: userId
             });
             alert("Post created Successfully");
             // Reset form 

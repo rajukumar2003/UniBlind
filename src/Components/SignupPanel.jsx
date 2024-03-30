@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { GoogleIcon } from "../assets/Icons";
 import { Link, useNavigate } from "react-router-dom";
-import { signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword,} from "firebase/auth";
+import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword,} from "firebase/auth";
 import { db, auth } from "../firebase";
 import { doc, setDoc, collection, query, where, getDocs, } from "firebase/firestore";
 import { generateRandomUsername } from "../anonymousNames";
 import { useUserContext } from "../userContext";
 import { validateEmail } from "../emailValidation";
+import { initAuthListener, handleEmailSignup, handleGoogleSignup } from './authUtils'; 
 
 const SignupPanel = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const SignupPanel = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repassword, setRepassword] = useState("");
-  const { setUsername } = useUserContext();
+  const { setuserId } = useUserContext();
 
   // Function to add user with random username------------------------------------------
   async function addUserWithRandomUsername(uid, email) {
@@ -32,33 +33,27 @@ const SignupPanel = () => {
       } else {
         generatedUsername = generateRandomUsername();
       }
-    }
+	  }
     // Adding user to database
     const userDocRef = doc(db, "users", uid);
     await setDoc(userDocRef, {
       email: email,
       username: generatedUsername,
 	});
-	setUsername(generatedUsername);   //Setting random username to context api
-    console.log(
-      "User added to database with random username: ",
-      generatedUsername
-    );
+	setuserId(uid);   //Setting userID to context api
+    alert("Signup Successful")
   }
 
-  // Signin using Google -------------------------------------------------------------------
-  const provider = new GoogleAuthProvider();
-  provider.setCustomParameters({ prompt: "select_account" });
-  const googleSignIn = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-	  const user = result.user;
-      await addUserWithRandomUsername(user.uid, user.email);
-      navigate("/dashboard");
-    } catch (error) {
-      alert(error);
-    }
-  };
+	// Signin using Google -------------------------------------------------------------------
+	const googleSignIn = async () => {
+		try {
+			const userId = await handleGoogleSignup();
+			await addUserWithRandomUsername(userId, user.email); 
+			navigate("/dashboard");
+		} catch (error) {
+			alert(error);
+		}
+	};
 
   // Signup using From -------------------------------------------------------------------
   const handleSubmit = async (e) => {
@@ -67,7 +62,6 @@ const SignupPanel = () => {
       alert("Passwords do not match");
       return;
 	}
-	
 	// Email Validation
 	const validationResult = validateEmail(email);
 	if (!validationResult.valid) {
@@ -75,21 +69,20 @@ const SignupPanel = () => {
 		return;
 	}
 	
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user.uid;
-      await addUserWithRandomUsername(user, email);
-		navigate("/dashboard");
-		
-    } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      alert(errorCode, errorMessage);
-    }
+	  try {
+		  const userId = await handleEmailSignup(email, password);
+		  await addUserWithRandomUsername(userId, email);
+		  navigate("/dashboard");
+	  } catch (error) {
+		  const errorCode = error.code;
+		  const errorMessage = error.message;
+		  alert(errorCode, errorMessage);
+	  }
+	// Setting up Auth Listener
+	  useEffect(() => {
+		  const unsubscribe = initAuthListener(setuserId);
+		  return unsubscribe;  // Important for cleanup
+	  }, []); 
   };
 
   return (
