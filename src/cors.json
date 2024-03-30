@@ -1,0 +1,18 @@
+[
+    {
+        "origin": [
+            "https://uniblind-fd882.web.app"
+        ],
+        "method": [
+            "POST",
+            "PUT",
+            "GET",
+            "OPTIONS",
+            "HEAD"
+        ],
+        "responseHeader": [
+            "Content-Type"
+        ],
+        "maxAgeSeconds": 3600
+    }
+]

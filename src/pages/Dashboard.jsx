@@ -1,12 +1,61 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Addpost, GroupChat, Logo, Proom, Vidchat } from "../assets/Icons";
 import { events, posts } from "../Constans";
 import PostCard from "../Components/PostCard";
 import EventCard from "../Components/EventCard";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import { fetchPosts } from "../postsUtils";
+import { signOut } from 'firebase/auth';
+import { auth } from "../firebase"
+import { getFirestore, collection, getDoc, doc } from 'firebase/firestore';
+import { useUserContext } from "../userContext";
 
-const Dashboard = () => {
+const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
+  const [username, setUsername] = useState('');
+  const [posts, setPosts] = useState([]);
+  const { userId } = useUserContext();
+  
+  const navigate = useNavigate();
+
+  // Fetching Posts-------------------------------------------------------------------
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const fetchedPosts = await fetchPosts();
+        setPosts(fetchedPosts);
+        // setUsername
+        console.log(userId)
+        const username = await fetchUsername(userId);
+        setUsername(username);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getPosts();
+  }, []);
+
+  // Fetching Username-------------------------------------------------------------------
+  async function fetchUsername(userId) {
+    const db = getFirestore();
+    const userDocRef = doc(db, 'users', userId);
+    const userDocSnap = await getDoc(userDocRef);
+
+    if (userDocSnap.exists()) {
+      return userDocSnap.data().username;
+    } else {
+      return null;
+    }
+  };
+
+
+  // Logout Button
+  const logoutButton = async () => {
+    await signOut(auth); 
+    navigate('/login'); 
+  }
+
+
   return (
     <main>
       <nav className="bg-[#B4D4FF] top-0 w-full h-100 flex z-10 fixed">
@@ -23,7 +72,7 @@ const Dashboard = () => {
               className="rounded-full w-[80px] h-[80px] mr-5"
             />
             <div className="ml-5 flex flex-col my-auto">
-              <h3 className="">Mighty Raju</h3>
+              <h1 className="">{ username }</h1>
               <p className=" text-xs">BCA</p>
             </div>
           </div>
@@ -65,7 +114,10 @@ const Dashboard = () => {
               />
               <p className=" text-white text-2xl my-auto">Video Meeting</p>
             </div>
-            <button>
+            <button onClick={() => {
+              navigate("/post");
+              setIsPostFormOpen(true);
+            }}>
               <div className="flex flex-row mx-auto">
                 <img
                   src={Addpost}
@@ -77,7 +129,12 @@ const Dashboard = () => {
                 <p className=" text-white text-2xl my-auto">Add Post</p>
               </div>
             </button>
-            <p className=" text-white text-2xl m-auto">Back</p>
+            <button
+              onClick={logoutButton}
+              className="bg-indigo-600 hover:bg-indigo-800 text-white font-medium py-2 px-5 rounded-full shadow-md transition-colors"
+            >
+              Logout
+            </button>
           </div>
         </section>
         <section className=" w-3/5 mx-auto ">
@@ -87,13 +144,14 @@ const Dashboard = () => {
             </p>
 
             <div className=" flex flex-col">
-              {posts.map((post, index) => (
+              {posts.map((post,index) => (
                 <PostCard
                   key={index}
-                  imgURL={post.imgURL}
+                  imgURL={post.imagePath}
                   title={post.title}
-                  message={post.message}
+                  message={post.description}
                   upvote={post.upvote}
+                  username={post.username}
                 />
               ))}
             </div>

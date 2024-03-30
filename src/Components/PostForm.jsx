@@ -1,5 +1,11 @@
 import React, { useState, useRef } from 'react';
-import axios from 'axios';
+import { getFirestore, collection, addDoc, doc, getDoc } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { db } from '../firebase';
+import { useNavigate } from 'react-router-dom';
+import { useUserContext } from '../userContext'
+
+const postsCollectionRef = collection(db, 'posts');
 
 const PostForm = ({ isOpen, onClose }) => {
     
@@ -7,32 +13,58 @@ const PostForm = ({ isOpen, onClose }) => {
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
+    const { userId } = useUserContext();
     const fileInputRef = useRef(null);
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const postData = new FormData(); // Create form data to handle images
-        postData.append('title', title);
-        postData.append('description', description);
-        postData.append('image', image);
 
+        // 1. Image Upload (If Image Exists)
+        let imageUrl = null;
+        if (image) {
+            try {
+                const storage = getStorage();
+                const imageRef = ref(storage, `postImages/${image.name}`);
+                const uploadResult = await uploadBytes(imageRef, image);
+                imageUrl = await getDownloadURL(imageRef);
+            } catch (error) {
+                console.error("Error uploading image:", error);
+                // Handle image upload error (e.g., display alert)
+                return; // Consider stopping form submission on image upload error 
+            }
+        }
+
+        // 2. Store Post in Firestore
+        console.log('userId:', userId);  // Debugging
         try {
-            // Assuming your deployed function endpoint is like this:
-            const functionUrl = 'https://your-project-id.cloudfunctions.net/api/post';
-            const response = await axios.post(functionUrl, postData, {
-                headers: { 'Content-Type': 'multipart/form-data' } // Required for image upload 
+            const userDocRef = doc(db, 'users', userId);
+            const userDocSnap = await getDoc(userDocRef);
+            if (!userDocSnap.exists()) { 
+                throw new Error("User not found in database");
+            };
+            const { username } = userDocSnap.data();
+            await addDoc(postsCollectionRef, {
+                title,
+                description,
+                imagePath: imageUrl,
+                createdAt: new Date(), 
+                username: username,
+                userId: userId
             });
-
-            console.log(response.data); // Log the response from your Cloud Function
-
-            // Reset form and close modal 
+            alert("Post created Successfully");
+            // Reset form 
             setTitle('');
             setDescription('');
             setImage(null);
+            setImagePreview(null);
             onClose();
+            navigate("/dashboard");
+
         } catch (error) {
             console.error("Error submitting post:", error);
-            // Handle error (e.g., display an alert message to the user)
+            // Handle general Firestore error (e.g., display alert)
         }
     };
 
@@ -57,7 +89,7 @@ const PostForm = ({ isOpen, onClose }) => {
                 </div>
 
                 <div className="content-container w-2/3 p-2">
-                    <button className="absolute top-3 right-3 text-2xl font-semibold" onClick={onClose}>
+                    <button className="absolute top-3 right-3 text-2xl font-semibold" onClick={() => { onClose; navigate("/dashboard")}}>
                         &times;
                     </button>
 
