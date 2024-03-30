@@ -6,9 +6,13 @@ import Proom from "./privateroom.png";
 import Vidchat from "./videochat.png";
 import upvoteicon from "./upvicon.png";
 import Swo from "./SWO.png";
+import Sent from "./sent.png";
+import Browsing from "./browsing.png";
 
 export {
   Logo,
+  Sent,
+  Browsing,
   GoogleIcon,
   Addpost,
   GroupChat,

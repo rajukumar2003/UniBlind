@@ -10,6 +10,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../userContext";
+import { Browsing, Sent } from "../assets/Icons/index";
 
 const postsCollectionRef = collection(db, "posts");
 
@@ -91,8 +92,8 @@ const PostForm = ({ isOpen, onClose }) => {
     >
       <div className="glass rounded-lg z-0">
         <div className=" m-2 bg-white shad bg-opacity-90 flex flex-col rounded-lg">
-          <h2 className="text-2xl font-semibold text-center">NEW POST</h2>
-          <div className=" border-t-[1px] border-black flex flex-row ">
+          <h2 className="py-3 text-2xl font-semibold text-center">NEW POST</h2>
+          <div className=" py-4 border-t-[1px] border-black flex flex-row ">
             <div className="image-preview-container w-[300px] h-auto p-2 flex items-center justify-center">
               {imagePreview && (
                 <img
@@ -103,7 +104,7 @@ const PostForm = ({ isOpen, onClose }) => {
               )}
             </div>
 
-            <div className="content-container w-2/3 p-2">
+            <div className="content-container w-[400px] p-2">
               <button
                 className="absolute top-3 right-3 text-2xl font-semibold"
                 onClick={() => {
@@ -116,39 +117,35 @@ const PostForm = ({ isOpen, onClose }) => {
               <form onSubmit={handleSubmit}>
                 <input
                   type="text"
-                  placeholder="Title"
-                  className="w-full p-3 border border-gray-300 rounded-md mb-3"
+                  placeholder="Type Your Title..."
+                  className="w-full p-2 border-b-[1px] border-black mb-3 bg-transparent focus:border-b focus:border-black"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                 />
 
                 <textarea
-                  placeholder="Description"
-                  className="w-full p-3 border border-gray-300 rounded-md mb-3 overflow-y-auto"
+                  placeholder="Type Description..."
+                  className="w-full p-2 border-b-[1px] border-black mb-3 bg-transparent overflow-y-auto"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 />
 
-                <label className="flex items-center justify-between w-full cursor-pointer">
-                  <span className="text-gray-600">Upload Image</span>
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleImageChange}
-                  />
-                  <span className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-                    Browse
-                  </span>
-                </label>
+                <div className="flex flex-row justify-between">
+                  <label className="flex items-center justify-between w-fit cursor-pointer">
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleImageChange}
+                    />
+                    <img src={Browsing} alt="Browse" className=" h-7 w-auto" />
+                  </label>
 
-                <button
-                  type="submit"
-                  className="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 mt-4 w-full font-medium"
-                >
-                  Send &rarr;
-                </button>
+                  <button type="submit">
+                    <img src={Sent} alt="Alt" className="h-7 w-auto" />
+                  </button>
+                </div>
               </form>
             </div>
           </div>

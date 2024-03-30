@@ -4,18 +4,18 @@ import { Addpost, GroupChat, Logo, Proom, Vidchat } from "../assets/Icons";
 import { events, posts } from "../Constans";
 import PostCard from "../Components/PostCard";
 import EventCard from "../Components/EventCard";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { fetchPosts } from "../postsUtils";
-import { signOut } from 'firebase/auth';
-import { auth } from "../firebase"
-import { getFirestore, collection, getDoc, doc } from 'firebase/firestore';
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+import { getFirestore, collection, getDoc, doc } from "firebase/firestore";
 import { useUserContext } from "../userContext";
 
 const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
   const [posts, setPosts] = useState([]);
   const { userId } = useUserContext();
-  
+
   const navigate = useNavigate();
 
   // Fetching Posts-------------------------------------------------------------------
@@ -25,7 +25,7 @@ const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
         const fetchedPosts = await fetchPosts();
         setPosts(fetchedPosts);
         // setUsername
-        console.log(userId)
+        console.log(userId);
         const username = await fetchUsername(userId);
         setUsername(username);
       } catch (error) {
@@ -38,7 +38,7 @@ const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
   // Fetching Username-------------------------------------------------------------------
   async function fetchUsername(userId) {
     const db = getFirestore();
-    const userDocRef = doc(db, 'users', userId);
+    const userDocRef = doc(db, "users", userId);
     const userDocSnap = await getDoc(userDocRef);
 
     if (userDocSnap.exists()) {
@@ -46,15 +46,13 @@ const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
     } else {
       return null;
     }
-  };
-
+  }
 
   // Logout Button
   const logoutButton = async () => {
-    await signOut(auth); 
-    navigate('/login'); 
-  }
-
+    await signOut(auth);
+    navigate("/login");
+  };
 
   return (
     <main>
@@ -72,7 +70,7 @@ const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
               className="rounded-full w-[80px] h-[80px] mr-5"
             />
             <div className="ml-5 flex flex-col my-auto">
-              <h1 className="">{ username }</h1>
+              <h1 className="">{username}</h1>
               <p className=" text-xs">BCA</p>
             </div>
           </div>
@@ -83,55 +81,65 @@ const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
             </p>
           </div>
 
-          <div className=" flex flex-col border-2 border-r-green-50 m-4">
-            <div className="flex flex-row mx-auto">
+          <div className=" flex flex-col border-2 glass m-4">
+            <div className="flex flex-row m-2">
               <img
                 src={GroupChat}
                 alt="groupchat icon"
-                className="mr-10"
-                width={70}
-                height={70}
+                className="mx-5"
+                width={50}
+                height={50}
               />
-              <p className=" text-white text-2xl my-auto">Group Chat</p>
+              <p className=" text-white text-xl text-left my-auto">
+                Group Chat
+              </p>
             </div>
-            <div className="flex flex-row mx-auto">
+            <div className="flex flex-row m-2">
               <img
                 src={Proom}
                 alt="Private Room icon"
-                className="mr-10"
-                width={70}
-                height={70}
+                className="mx-5"
+                width={50}
+                height={50}
               />
-              <p className=" text-white text-2xl my-auto">Private Room</p>
+              <p className=" text-white text-xl text-left my-auto">
+                Private Room
+              </p>
             </div>
-            <div className="flex flex-row mx-auto">
+            <div className="flex flex-row m-2">
               <img
                 src={Vidchat}
                 alt="Vidchat icon"
-                className="mr-10"
-                width={70}
-                height={70}
+                className="mx-5"
+                width={50}
+                height={50}
               />
-              <p className=" text-white text-2xl my-auto">Video Meeting</p>
+              <p className=" text-white text-xl text-left my-auto">
+                Video Meeting
+              </p>
             </div>
-            <button onClick={() => {
-              navigate("/post");
-              setIsPostFormOpen(true);
-            }}>
-              <div className="flex flex-row mx-auto">
+            <button
+              onClick={() => {
+                navigate("/post");
+                setIsPostFormOpen(true);
+              }}
+            >
+              <div className="flex flex-row m-2">
                 <img
                   src={Addpost}
                   alt="Add post icon"
-                  className="mr-10"
-                  width={70}
-                  height={70}
+                  className="mx-5"
+                  width={50}
+                  height={50}
                 />
-                <p className=" text-white text-2xl my-auto">Add Post</p>
+                <p className=" text-white text-xl text-left my-auto">
+                  Add Post
+                </p>
               </div>
             </button>
             <button
               onClick={logoutButton}
-              className="bg-indigo-600 hover:bg-indigo-800 text-white font-medium py-2 px-5 rounded-full shadow-md transition-colors"
+              className=" text-white font-medium py-2 px-5 rounded-full shadow-md"
             >
               Logout
             </button>
@@ -144,7 +152,7 @@ const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
             </p>
 
             <div className=" flex flex-col">
-              {posts.map((post,index) => (
+              {posts.map((post, index) => (
                 <PostCard
                   key={index}
                   imgURL={post.imagePath}
@@ -181,7 +189,7 @@ const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
 
           {/*  */}
 
-          <div className="text-xl text-white flex flex-col items-center m-5 border-2 border-white rounded-lg py-5">
+          <div className="text-xl glass text-white flex flex-col items-center m-5 border-2 border-white rounded-lg py-5">
             <Link to="/">Feedback</Link>
             <Link to="/">Help</Link>
             <Link to="/">Customer Care</Link>
