@@ -10,11 +10,11 @@ const Navbar = () => {
   };
 
   return (
-    <header className=" bg-transparent p-4 flex justify-between items-center">
+    <nav className=" bg-transparent p-4 flex flex-row justify-between items-center">
       <div>
         <img src={Logo} alt="UniBLind Logo" className=" mr-2 h-12 w-auto" />
       </div>
-      <nav>
+      <div>
         <ul className="flex space-x-4">
           <li>
             <button
@@ -41,8 +41,8 @@ const Navbar = () => {
             </button>
           </li>
         </ul>
-      </nav>
-    </header>
+      </div>
+    </nav>
   );
 };
 
