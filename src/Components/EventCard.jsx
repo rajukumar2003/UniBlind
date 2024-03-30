@@ -1,6 +1,6 @@
 const EventCard = ({ imgURL, org, date, venue, title }) => {
   return (
-    <div className="flex flex-row my-5 font-medium text-white ">
+    <div className="flex flex-row mb-5 font-medium text-white ">
       <img
         src={imgURL}
         alt="Event image"

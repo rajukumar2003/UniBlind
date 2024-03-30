@@ -2,9 +2,9 @@ import { upvoteicon } from "../assets/Icons";
 
 const PostCard = ({ imgURL, title, message, upvote, username }) => {
   return (
-    <div>
+    <div className="border-2 p-4 mb-3">
       <em className="text-md text-slate-gray font-semibold">{username}</em>
-      <div className="flex flex-row mb-10">
+      <div className="flex flex-row mb-10 mt-2">
         <div>
           <img
             src={imgURL}
