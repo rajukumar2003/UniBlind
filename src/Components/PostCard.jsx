@@ -14,8 +14,10 @@ const PostCard = ({ imgURL, title, message, upvote, username }) => {
         </div>
 
         <div className="flex flex-col w-[60%] h-full">
-          <h3 className="mt-1 font-palanquin text-xl font-semibold">{title}</h3>
-          <p className="mt-6 max-w-md info-text">{message}</p>
+          <h3 className="mt-1 font-montserrat text-lg font-semibold">
+            {title}
+          </h3>
+          <p className="mt-6 max-w-md text-sm font-montserrat">{message}</p>
         </div>
       </div>
 
