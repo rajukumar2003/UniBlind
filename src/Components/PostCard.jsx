@@ -16,7 +16,7 @@ const PostCard = ({
   const [hasUpvoted, setHasUpvoted] = useState(upvote.includes(userId));
 
   return (
-    <div className="border-2 p-4 mb-3">
+    <div className="border-2 p-4 pb-2 mb-3 w-full h-full">
       <em className="text-md text-slate-gray font-semibold">{username}</em>
       <div className="flex flex-row">
         <div className="flex flex-row mt-2">
@@ -34,9 +34,9 @@ const PostCard = ({
             {title}
           </h3>
           <p className="mt-6 max-w-md text-sm font-montserrat">{message}</p>
-        </div>
+        </div> 
       </div>
-      <div className="mt-3 flex gap-2.5 justify-end">
+      <div className="mt-3 justify-start">
         <button
           onClick={() => {
             handleUpvote();
@@ -45,14 +45,16 @@ const PostCard = ({
           disabled={hasUpvoted}
           className={`upvote-button ${hasUpvoted ? "upvoted" : ""}`}
         >
-          <img
-            src={upvoteicon}
-            width={24}
-            height={24}
-            alt="upvoting icon"
-            className="object-contain m-0"
-          />
-          <p>{upvote.length}</p>
+          <div className="flex">
+            <img
+              src={upvoteicon}
+              width={24}
+              height={24}
+              alt="upvoting icon"
+              className="object-contain mr-2 mt-2"
+            />
+            <p>{upvote.length}</p>
+          </div>
         </button>
       </div>
     </div>
@@ -60,3 +62,5 @@ const PostCard = ({
 };
 
 export default PostCard;
+
+
