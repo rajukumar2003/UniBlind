@@ -5,41 +5,30 @@
 @tailwind utilities;
 
 @layer components {
-  .card {
-    background: radial-gradient(
-          circle at 100% 100%,
-          #ffffff 0,
-          #ffffff 3px,
-          transparent 3px
-        )
-        0% 0%/8px 8px no-repeat,
-      radial-gradient(circle at 0 100%, #ffffff 0, #ffffff 3px, transparent 3px)
-        100% 0%/8px 8px no-repeat,
-      radial-gradient(circle at 100% 0, #ffffff 0, #ffffff 3px, transparent 3px)
-        0% 100%/8px 8px no-repeat,
-      radial-gradient(circle at 0 0, #ffffff 0, #ffffff 3px, transparent 3px)
-        100% 100%/8px 8px no-repeat,
-      linear-gradient(#ffffff, #ffffff) 50% 50% / calc(100% - 10px)
-        calc(100% - 16px) no-repeat,
-      linear-gradient(#ffffff, #ffffff) 50% 50% / calc(100% - 16px)
-        calc(100% - 10px) no-repeat,
-      linear-gradient(90deg, #48abe0 0%, transparent 100%);
-    border-radius: 8px;
-    padding: 9px;
-    box-sizing: content-box;
+  .grad {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(134, 182, 246, 1) 35%
+    );
   }
 
   .shad {
-    -webkit-box-shadow: 0px 0px 7px 8px rgba(255,255,255,0.9);
--moz-box-shadow: 0px 0px 7px 8px rgba(255,255,255,0.9);
-box-shadow: 0px 0px 7px 8px rgba(255,255,255,0.9);
+    -webkit-box-shadow: 0px 0px 7px 8px rgba(255, 255, 255, 0.9);
+    -moz-box-shadow: 0px 0px 7px 8px rgba(255, 255, 255, 0.9);
+    box-shadow: 0px 0px 7px 8px rgba(255, 255, 255, 0.9);
   }
   .glass {
-    background: rgba(255, 255, 255, 0);
+    background: rgba(255, 255, 255, 0.4);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+  }
+  .black-shad {
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 1);
+    -moz-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 1);
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 1);
   }
 }
 
