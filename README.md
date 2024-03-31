@@ -8,6 +8,12 @@ UniBlind provides a platform for open and honest conversations within your unive
 - University-Focused: Built specifically for your university community, fostering a sense of belonging and shared experiences.
 - Safe & Moderated: Proactive moderation to ensure a respectful and inclusive environment.
 
+### Moderation and Safety
+
+- Content Moderation System: Implement a robust system for flagging and reviewing posts that could be harmful or offensive. You might combine automated tools with human - oversight.
+- Reporting Features: Easy access to mechanisms for users to report inappropriate content, bullying, or harassment.
+- Safety Guidelines: Provide clear community guidelines to promote a positive and respectful environment, emphasizing the importance of anonymity and responsible use.
+
 ## Setup Instructions
 
 1. **Clone the Repository** 
