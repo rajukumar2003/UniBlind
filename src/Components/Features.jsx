@@ -20,7 +20,7 @@ const Features = () => {
           <img
             src={Feat}
             alt="BG IMAGE"
-            className="z-0 object-right absolute object-fill h-[80%] right-0"
+            className="z-0 object-right absolute object-fill h-[100%] right-10"
           />
         </div>
         <div className=" z-10">
