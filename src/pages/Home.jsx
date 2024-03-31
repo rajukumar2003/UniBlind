@@ -23,7 +23,7 @@ const Home = () => {
           <Hero />
         </section>
       </div>
-      <section className="pl-32 py-10">
+      <section className="px-32 py-10">
         <Features />
       </section>
       <section>
