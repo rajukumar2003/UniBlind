@@ -150,7 +150,7 @@ const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
         <section className=" w-3/5 mx-auto ">
           <div className="mx-10">
             <p className=" mt-20 text-[#86B6F6] font-semibold mb-5  font-montserrat text-2xl">
-              TRENDING
+              TRENDINGlol
             </p>
 
             <div className=" flex flex-col">
