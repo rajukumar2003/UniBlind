@@ -3,12 +3,12 @@ import Navbar from "../Components/Navbar";
 import Hero from "../Components/Hero";
 import { LandBG } from "../assets/Images/";
 import Features from "../Components/Features";
-import AboutUs from "../Components/AboutUs"
-import Contactus from "../Components/Contactus"
+import AboutUs from "../Components/AboutUs";
+import Contactus from "../Components/Contactus";
 
 const Home = () => {
   return (
-    <main className="bg-gradient-to-r from-[#B4D4FF] to-white h-screen ">
+    <main className="bg-gradient-to-r from-[#B4D4FF] to-white h-full ">
       <div className="h-screen relative">
         <img
           src={LandBG}
@@ -23,14 +23,14 @@ const Home = () => {
           <Hero />
         </section>
       </div>
-      <section>
+      <section className="h-screen pl-10 py-10">
         <Features />
       </section>
       <section>
-        <AboutUs/>
+        <AboutUs />
       </section>
       <section>
-        <Contactus/>
+        <Contactus />
       </section>
     </main>
   );

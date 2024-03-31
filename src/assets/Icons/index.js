@@ -8,8 +8,10 @@ import upvoteicon from "./upvicon.png";
 import Swo from "./SWO.png";
 import Sent from "./sent.png";
 import Browsing from "./browsing.png";
+import Mask from "./Anonymous Mask.svg";
 
 export {
+  Mask,
   Logo,
   Sent,
   Browsing,
