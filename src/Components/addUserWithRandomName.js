@@ -28,5 +28,5 @@ export async function addUserWithRandomUsername(uid, email, setuserId) {
         username: generatedUsername,
     });
     setuserId(uid); // Setting userId in context
-    alert("Signup Successful");
-}
+    console.log("User added to database");
+};

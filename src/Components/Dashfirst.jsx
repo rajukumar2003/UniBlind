@@ -1,44 +1,23 @@
 import React from "react";
-import {
-  Addpost,
-  GoogleIcon,
-  GroupChat,
-  Proom,
-  Vidchat,
-} from "../assets/Icons";
+import { Addpost, GoogleIcon, GroupChat, Proom, Vidchat } from "../assets/Icons";
 import { useState } from "react";
-import {
-  getFirestore,
-  collection,
-  getDoc,
-  doc,
-  updateDoc,
-  arrayUnion,
-} from "firebase/firestore";
+import { getFirestore, collection, getDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { useUserContext } from "../userContext";
-import { db } from "../firebase";
+import { db,auth } from "../firebase";
+import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
-const Dashfirst = () => {
-  const [username, setUsername] = useState("");
+
+const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
   const { userId } = useUserContext();
-  // Fetching Username-------------------------------------------------------------------
-  async function fetchUsername(userId) {
-    const db = getFirestore();
-    const userDocRef = doc(db, "users", userId);
-    const userDocSnap = await getDoc(userDocRef);
-
-    if (userDocSnap.exists()) {
-      return userDocSnap.data().username;
-    } else {
-      return null;
-    }
-  }
+  const navigate = useNavigate();
 
   // Logout Button
   const logoutButton = async () => {
     await signOut(auth);
     navigate("/");
   };
+
 
   return (
     <div>
@@ -99,65 +78,21 @@ const Dashfirst = () => {
             setIsPostFormOpen(true);
           }}
         >
-        <div className="flex flex-row mx-3 mt-3 ">
-          <img
-            src={Addpost}
-            alt="groupchat icon"
-            className="mx-5 h-[50px] w-[60px]"
-          />
-          <p className=" text-white text-xl my-auto font-montserrat font-semibold text-left">
-            Add Post
-          </p>
-        </div>
-        </button>
-        
-
-        {/* <div className="flex flex-row mx-auto">
-          <img
-            src={Proom}
-            alt="Private Room icon"
-            className="mx-5"
-            width={50}
-            height={50}
-          />
-          <p className=" text-white text-2xl my-auto font-montserrat font-semibold">
-            Private Room
-          </p>
-        </div>
-        <div className="flex flex-row mx-auto">
-          <img
-            src={Vidchat}
-            alt="Vidchat icon"
-            className="mr-10"
-            width={50}
-            height={50}
-          />
-          <p className=" text-white text-2xl my-auto font-montserrat font-semibold">
-            Video Meeting
-          </p>
-        </div>
-        <button
-          onClick={() => {
-            navigate("/post");
-            setIsPostFormOpen(true);
-          }}
-        >
-          <div className="flex flex-row mx-auto">
+          <div className="flex flex-row mx-3 mt-3 ">
             <img
               src={Addpost}
-              alt="Add post icon"
-              className="mr-10"
-              width={50}
-              height={50}
+              alt="groupchat icon"
+              className="mx-5 h-[50px] w-[60px]"
             />
-            <p className=" text-white text-2xl my-auto font-montserrat font-semibold">
+            <p className=" text-white text-xl my-auto font-montserrat font-semibold text-left">
               Add Post
             </p>
           </div>
-        </button> */}
+        </button>
+
         <button
           onClick={logoutButton}
-          className="text-white py-2 px-5 font-montserrat font-semibold m-3"
+          className="bg-indigo-600 hover:bg-indigo-800 text-white font-medium py-2 px-5 rounded-full shadow-md transition-colors"
         >
           Logout
         </button>
