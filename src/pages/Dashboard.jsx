@@ -1,223 +1,148 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Addpost, GroupChat, Logo, Proom, Vidchat } from "../assets/Icons";
+import {
+  Addpost,
+  GoogleIcon,
+  GroupChat,
+  Logo,
+  Proom,
+  Vidchat,
+} from "../assets/Icons";
 import { events, posts } from "../Constans";
 import PostCard from "../Components/PostCard";
-import EventCard from "../Components/EventCard";
 import { useState, useEffect } from "react";
 import { fetchPosts } from "../postsUtils";
-import { signOut } from 'firebase/auth';
-import { auth } from "../firebase"
-import { getFirestore, collection, getDoc, doc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+import {
+  getFirestore,
+  collection,
+  getDoc,
+  doc,
+  updateDoc,
+  arrayUnion,
+} from "firebase/firestore";
 import { useUserContext } from "../userContext";
 import { db } from "../firebase";
+import Dashfirst from "../Components/Dashfirst";
+import Dashthird from "../Components/Dashthird";
 
 const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
-	const { userId } = useUserContext();
-	const [username, setUsername] = useState('');
-	const [posts, setPosts] = useState([]);
-	const [upvote, setUpvote] = useState(0);
-	const [hasUpvoted, setHasUpvoted] = useState("");
-  
-  
+  const { userId } = useUserContext();
+  const [username, setUsername] = useState("");
+  const [posts, setPosts] = useState([]);
+  const [upvote, setUpvote] = useState(0);
+  const [hasUpvoted, setHasUpvoted] = useState("");
+
   const navigate = useNavigate();
 
   // Fetching Posts-------------------------------------------------------------------
   useEffect(() => {
-	const getPosts = async () => {
-	  try {
-		const fetchedPosts = await fetchPosts();
-		setPosts(fetchedPosts);
-		// setUsername
-		const username = await fetchUsername(userId);
-		setUsername(username);
-	  } catch (error) {
-		console.log(error);
-	  }
-	};
-	getPosts();
+    const getPosts = async () => {
+      try {
+        const fetchedPosts = await fetchPosts();
+        setPosts(fetchedPosts);
+        // setUsername
+        const username = await fetchUsername(userId);
+        setUsername(username);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getPosts();
   }, []);
 
   // Fetching Username-------------------------------------------------------------------
   async function fetchUsername(userId) {
-	const db = getFirestore();
-	const userDocRef = doc(db, 'users', userId);
-	const userDocSnap = await getDoc(userDocRef);
+    const db = getFirestore();
+    const userDocRef = doc(db, "users", userId);
+    const userDocSnap = await getDoc(userDocRef);
 
-	if (userDocSnap.exists()) {
-	  return userDocSnap.data().username;
-	} else {
-	  return null;
-	}
-	};
-	
-	// Handle Post Upvote-------------------------------------------------------------------
-	const handlePostUpvote = async (postId) => {
-		try {
-			// 1. Update Firestore 
-			const postRef = doc(db, 'posts', postId);
-			await updateDoc(postRef, {
-				upvotes: arrayUnion(userId)
-			}, {
-				arrayContains: userId         // Prevents duplicate upvotes
-			});
-
-			// 2. Update Local State (Optimistic Update)
-			const updatedPosts = posts.map(post => {
-				if (post.id === postId) {
-					return { ...post, upvotes: post.upvotes.concat(userId), hasUpvoted:true }; // Add user ID to upvotes 
-				} else {
-					return post;
-				}
-			});
-			setPosts(updatedPosts);
-			setHasUpvoted(true);  
-		} catch (error) {
-			console.error("Error upvoting post:", error);
-		}
-	};
-
-  // Logout Button
-  const logoutButton = async () => {
-	await signOut(auth); 
-	navigate('/'); 
+    if (userDocSnap.exists()) {
+      return userDocSnap.data().username;
+    } else {
+      return null;
+    }
   }
+
+  // Handle Post Upvote-------------------------------------------------------------------
+  const handlePostUpvote = async (postId) => {
+    try {
+      // 1. Update Firestore
+      const postRef = doc(db, "posts", postId);
+      await updateDoc(
+        postRef,
+        {
+          upvotes: arrayUnion(userId),
+        },
+        {
+          arrayContains: userId, // Prevents duplicate upvotes
+        }
+      );
+
+      // 2. Update Local State (Optimistic Update)
+      const updatedPosts = posts.map((post) => {
+        if (post.id === postId) {
+          return {
+            ...post,
+            upvotes: post.upvotes.concat(userId),
+            hasUpvoted: true,
+          }; // Add user ID to upvotes
+        } else {
+          return post;
+        }
+      });
+      setPosts(updatedPosts);
+      setHasUpvoted(true);
+    } catch (error) {
+      console.error("Error upvoting post:", error);
+    }
+  };
 
 
   return (
-	<main>
-	  <nav className="bg-[#B4D4FF] top-0 w-full h-100 flex z-10 fixed">
-		<img src={Logo} alt="UniBLind Logo" className=" h-[55px] w-auto" />
-		<p className="text-white m-auto font-semibold text-xl">UniBlind</p>
-	  </nav>
-	  <div className="flex flex-row">
-		<section className="h-screen bg-[#86B6F6] w-1/5 fixed">
-		  {/*  */}
-		  <div className="flex flex-row mt-[50px] font-medium text-white ">
-			<img
-			  src={Logo}
-			  alt="Event image"
-			  className="rounded-full w-[80px] h-[80px] mr-5"
-			/>
-			<div className="ml-5 flex flex-col my-auto">
-			  <h1 className="">{ username }</h1>
-			  <p className=" text-xs">BCA</p>
-			</div>
-		  </div>
-		  {/*  */}
-		  <div className=" card w-fit mx-auto py-5 px-12 rounded-lg">
-			<p className="text-center text-2xl text-black font-semibold">
-			  University
-			</p>
-		  </div>
+    <main>
+      <nav className="bg-[#B4D4FF] top-0 w-full h-100 flex z-10 fixed">
+        <img src={Logo} alt="UniBLind Logo" className=" h-[55px] w-auto" />
+        <p className="text-white m-auto font-semibold text-2xl font-montserrat">
+          UniBlind
+        </p>
+      </nav>
+      <div className="flex flex-row">
 
-		  <div className=" flex flex-col border-2 border-r-green-50 m-4">
-			<div className="flex flex-row mx-auto">
-			  <img
-				src={GroupChat}
-				alt="groupchat icon"
-				className="mr-10"
-				width={70}
-				height={70}
-			  />
-			  <p className=" text-white text-2xl my-auto">Group Chat</p>
-			</div>
-			<div className="flex flex-row mx-auto">
-			  <img
-				src={Proom}
-				alt="Private Room icon"
-				className="mr-10"
-				width={70}
-				height={70}
-			  />
-			  <p className=" text-white text-2xl my-auto">Private Room</p>
-			</div>
-			<div className="flex flex-row mx-auto">
-			  <img
-				src={Vidchat}
-				alt="Vidchat icon"
-				className="mr-10"
-				width={70}
-				height={70}
-			  />
-			  <p className=" text-white text-2xl my-auto">Video Meeting</p>
-			</div>
-			<button onClick={() => {
-			  navigate("/post");
-			  setIsPostFormOpen(true);
-			}}>
-			  <div className="flex flex-row mx-auto">
-				<img
-				  src={Addpost}
-				  alt="Add post icon"
-				  className="mr-10"
-				  width={70}
-				  height={70}
-				/>
-				<p className=" text-white text-2xl my-auto">Add Post</p>
-			  </div>
-			</button>
-			<button
-			  onClick={logoutButton}
-			  className="bg-indigo-600 hover:bg-indigo-800 text-white font-medium py-2 px-5 rounded-full shadow-md transition-colors"
-			>
-			  Logout
-			</button>
-		  </div>
-		</section>
-		<section className=" w-3/5 mx-auto ">
-		  <div className="mx-10">
-			<p className=" mt-24 ml-10 text-[#86B6F6] font-semibold mb-10 ">
-			  TRENDING
-			</p>
+		{/* Section 1 ..................... */}
+        <section className="h-screen bg-[#86B6F6] w-1/5 fixed">
+          <Dashfirst />
+        </section>
 
-			<div className=" flex flex-col">
-			  {posts.map((post,index) => (
-				<PostCard
-					key={index}
-					imgURL={post.imagePath}
-					title={post.title}
-					message={post.description}
-					username={post.username}
-					upvote={post.upvotes}
-					postId={post.id}
-					hasUpvoted={post.upvotes.includes(userId)} // Initialize hasUpvoted state
-					handleUpvote={() => handlePostUpvote(post.id)}
+		{/* Section 2............................ */}
+        <section className=" w-3/5 mx-auto ">
+          <div className="mx-10">
+            <p className=" mt-20 text-[#86B6F6] font-semibold mb-5 text-2xl font-montserrat">
+              TRENDING
+            </p>
 
-				/>
-			  ))}
-			</div>
-		  </div>
-		</section>
-		<section className="flex-1 bg-[#86B6F6] w-1/5 h-screen fixed right-0">
-		  <div className=" mt-20 card w-fit mx-auto py-5 px-12 rounded-lg mb-5">
-			<p className="text-center text-2xl text-black font-semibold">
-			  University Events
-			</p>
-		  </div>
-
-		  {/*  */}
-
-		  <div className=" ml-4 flex flex-col no-scrollbar overflow-y-auto h-2/5">
-			{events.map((event, index) => (
-			  <EventCard
-				key={index}
-				imgURL={event.imgURL}
-				title={event.title}
-				org={event.org}
-				date={event.date}
-				venue={event.venue}
-			  />
-			))}
-		  </div>
-
-          <div className="text-xl glass text-white flex flex-col items-center m-5 border-2 border-white rounded-lg py-5 font-montserrat">
-            <Link to="/">Feedback</Link>
-            <Link to="/">Help</Link>
-            <Link to="/">Customer Care</Link>
-            <Link to="/">Contact-Us</Link>
-            <Link to="/">About-Us</Link>
+            <div className=" flex flex-col">
+              {posts.map((post, index) => (
+                <PostCard
+                  key={index}
+                  imgURL={post.imagePath}
+                  title={post.title}
+                  message={post.description}
+                  username={post.username}
+                  upvote={post.upvotes}
+                  postId={post.id}
+                  hasUpvoted={post.upvotes.includes(userId)} // Initialize hasUpvoted state
+                  handleUpvote={() => handlePostUpvote(post.id)}
+                />
+              ))}
+            </div>
           </div>
+        </section>
+
+		{/* Section 3........................ */}
+        <section className="flex-1 bg-[#86B6F6] w-1/5 h-screen fixed right-0">
+          <Dashthird/>
         </section>
       </div>
     </main>
