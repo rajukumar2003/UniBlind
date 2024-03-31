@@ -51,6 +51,7 @@ const PostForm = ({ isOpen, onClose }) => {
         throw new Error("User not found in database");
       }
       const { username } = userDocSnap.data();
+      // Collection: posts
       await addDoc(postsCollectionRef, {
         title,
         description,
@@ -58,6 +59,7 @@ const PostForm = ({ isOpen, onClose }) => {
         createdAt: new Date(),
         username: username,
         userId: userId,
+        upvotes: [],
       });
       alert("Post created Successfully");
       // Reset form
