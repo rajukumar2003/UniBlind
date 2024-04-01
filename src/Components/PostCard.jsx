@@ -49,18 +49,20 @@ const PostCard = ({
           disabled={hasUpvoted}
           className={`upvote-button ${hasUpvoted ? "upvoted" : ""}`}
         >
-          <FormControlLabel
-            control={
-              <Checkbox
-                icon={<FavoriteBorder />}
-                checkedIcon={<Favorite />}
-                name="checkedH"
-                checked={hasUpvoted}
-              />
-            }
-          />
-          <div className="flex mt-2">
-            <p className="my-auto">{upvote.length}</p>
+          <div className="flex">
+            <div className="flex mr-3">
+              <p className=" my-auto">{upvote.length}</p>
+            </div>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  icon={<FavoriteBorder />}
+                  checkedIcon={<Favorite />}
+                  name="checkedH"
+                  checked={hasUpvoted}
+                />
+              }
+            />
           </div>
         </button>
       </div>
