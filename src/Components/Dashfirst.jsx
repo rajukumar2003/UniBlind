@@ -27,8 +27,8 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
           alt="Event image"
           className="rounded-full w-[50px] h-[50px] mr-3"
         />
-        <div className="ml-3 flex flex-col my-auto">
-          <h1 className=" font-montserrat text-lg">{username}</h1>
+        <div className="ml-1 flex flex-col my-auto">
+          <e className=" font-montserrat text-lg">{username}</e>
           <p className=" text-xs">BCA</p>
         </div>
       </div>
@@ -58,9 +58,10 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
             alt="groupchat icon"
             className="mx-5 h-[50px] w-[60px]"
           />
-          <p className=" text-white text-xl my-auto font-montserrat font-semibold text-left">
-            Private Room
-          </p>
+          <button onClick={()=>{navigate("/channels")}}
+            className=" text-white text-xl my-auto font-montserrat font-semibold text-left">
+            Channels
+          </button>
         </div>
         <div className="flex flex-row mx-3 mt-3 ">
           <img
@@ -89,7 +90,7 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
             </p>
           </div>
         </button>
-
+          <br />
         <button
           onClick={logoutButton}
           className="bg-indigo-600 hover:bg-indigo-800 text-white font-medium py-2 px-5 rounded-full shadow-md transition-colors"

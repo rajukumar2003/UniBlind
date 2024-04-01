@@ -8,7 +8,8 @@ import PostForm from "./Components/PostForm";
 import Dashboard from "./pages/Dashboard";
 import { useState } from "react";
 import { UserProvider } from "./userContext";
-
+import Channels from "./pages/Channels";
+import CreateConfession from "./pages/CreateConfession";
 
 export default function App() {
   const [isPostFormOpen, setIsPostFormOpen] = useState(false);
@@ -24,6 +25,9 @@ export default function App() {
           <Route path="/forgotpassword" element={<ForgotPass />} />
           <Route path="/webnorms" element={<WebNorms />} />
           <Route path="/dashboard" element={<Dashboard isPostFormOpen={isPostFormOpen} setIsPostFormOpen={setIsPostFormOpen} />} />
+          <Route path="/channels" element={<Channels />} />
+          <Route path="/confession/create" element={<CreateConfession />} />
+          
         </Routes>
         </BrowserRouter>
     </UserProvider>

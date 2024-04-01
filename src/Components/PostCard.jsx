@@ -2,19 +2,12 @@ import { upvoteicon } from "../assets/Icons";
 import { useUserContext } from "../userContext";
 import { useState } from "react";
 
-const PostCard = ({
-  imgURL,
-  title,
-  message,
-  upvote,
-  username,
-  postId,
-  handleUpvote,
-}) => {
+
+const PostCard = ({ imgURL, title, message, upvote, username, postId, handleUpvote }) => {
   const { userId } = useUserContext();
   const [upvoteCount, setUpvoteCount] = useState(upvote);
   const [hasUpvoted, setHasUpvoted] = useState(upvote.includes(userId));
-
+	
   return (
     <div className="border-2 p-4 mb-3">
       <em className="text-md text-slate-gray font-semibold">{username}</em>
@@ -36,7 +29,7 @@ const PostCard = ({
           <p className="mt-6 max-w-md text-sm font-montserrat">{message}</p>
         </div>
       </div>
-      <div className="mt-3 flex gap-2.5 justify-end">
+		  <div className="mt-3 flex gap-2.5 justify-end upvote-button">
         <button
           onClick={() => {
             handleUpvote();
@@ -52,7 +45,7 @@ const PostCard = ({
             alt="upvoting icon"
             className="object-contain m-0"
           />
-          <p>{upvote.length}</p>
+          <b>{upvote.length}</b>
         </button>
       </div>
     </div>
