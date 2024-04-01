@@ -9,8 +9,10 @@ import Swo from "./SWO.png";
 import Sent from "./sent.png";
 import Browsing from "./browsing.png";
 import Mask from "./Anonymous Mask.svg";
+import Fav from "./favourite.png";
 
 export {
+  Fav,
   Mask,
   Logo,
   Sent,

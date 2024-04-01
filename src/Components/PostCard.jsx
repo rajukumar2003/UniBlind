@@ -1,4 +1,4 @@
-import { upvoteicon } from "../assets/Icons";
+import { Fav, upvoteicon } from "../assets/Icons";
 import { useUserContext } from "../userContext";
 import { useState } from "react";
 
@@ -9,7 +9,7 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, handleUpvo
   const [hasUpvoted, setHasUpvoted] = useState(upvote.includes(userId));
 	
   return (
-    <div className="border-2 p-4 mb-3">
+    <div className="border-2 p-4 pb-2 mb-3 w-full h-full">
       <em className="text-md text-slate-gray font-semibold">{username}</em>
       <div className="flex flex-row">
         <div className="flex flex-row mt-2">
@@ -29,7 +29,7 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, handleUpvo
           <p className="mt-6 max-w-md text-sm font-montserrat">{message}</p>
         </div>
       </div>
-		  <div className="mt-3 flex gap-2.5 justify-end upvote-button">
+      <div className="mt-3 justify-start">
         <button
           onClick={() => {
             handleUpvote();
@@ -38,14 +38,16 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, handleUpvo
           disabled={hasUpvoted}
           className={`upvote-button ${hasUpvoted ? "upvoted" : ""}`}
         >
-          <img
-            src={upvoteicon}
-            width={24}
-            height={24}
-            alt="upvoting icon"
-            className="object-contain m-0"
-          />
-          <b>{upvote.length}</b>
+          <div className="flex mt-2">
+            <img
+              src={Fav}
+              width={30}
+              height={30}
+              alt="upvoting icon"
+              className="object-contain mr-2"
+            />
+            <p className="my-auto">{upvote.length}</p>
+          </div>
         </button>
       </div>
     </div>

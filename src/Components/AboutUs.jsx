@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
 
 const AboutUs = () => {
   return (
-    <div id='aboutus'>AboutUs</div>
-  )
-}
+    <div id="aboutus" className="h-screen py-6 px-32">
+      <p className="font-montserrat font-semibold text-white text-3xl">
+        ABOUT US
+      </p>
 
-export default AboutUs
+      
+    </div>
+  );
+};
+
+export default AboutUs;
