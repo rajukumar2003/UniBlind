@@ -1,4 +1,4 @@
-import { upvoteicon } from "../assets/Icons";
+import { Fav, upvoteicon } from "../assets/Icons";
 import { useUserContext } from "../userContext";
 import { useState } from "react";
 
@@ -34,7 +34,7 @@ const PostCard = ({
             {title}
           </h3>
           <p className="mt-6 max-w-md text-sm font-montserrat">{message}</p>
-        </div> 
+        </div>
       </div>
       <div className="mt-3 justify-start">
         <button
@@ -45,15 +45,15 @@ const PostCard = ({
           disabled={hasUpvoted}
           className={`upvote-button ${hasUpvoted ? "upvoted" : ""}`}
         >
-          <div className="flex">
+          <div className="flex mt-2">
             <img
-              src={upvoteicon}
-              width={24}
-              height={24}
+              src={Fav}
+              width={30}
+              height={30}
               alt="upvoting icon"
-              className="object-contain mr-2 mt-2"
+              className="object-contain mr-2"
             />
-            <p>{upvote.length}</p>
+            <p className="my-auto">{upvote.length}</p>
           </div>
         </button>
       </div>
@@ -62,5 +62,3 @@ const PostCard = ({
 };
 
 export default PostCard;
-
-

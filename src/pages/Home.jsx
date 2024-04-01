@@ -26,7 +26,7 @@ const Home = () => {
       <section className="px-32 py-10">
         <Features />
       </section>
-      <section>
+      <section className="">
         <AboutUs />
       </section>
       <section>

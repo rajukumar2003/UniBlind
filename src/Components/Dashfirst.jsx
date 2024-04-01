@@ -92,7 +92,7 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
 
         <button
           onClick={logoutButton}
-          className="bg-indigo-600 hover:bg-indigo-800 text-white font-medium py-2 px-5 rounded-full shadow-md transition-colors"
+          className=" text-white font-medium py-2 px-5 "
         >
           Logout
         </button>
