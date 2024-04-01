@@ -1,12 +1,24 @@
 import React from "react";
-import { Addpost, GoogleIcon, GroupChat, Proom, Vidchat } from "../assets/Icons";
+import {
+  Addpost,
+  GoogleIcon,
+  GroupChat,
+  Proom,
+  Vidchat,
+} from "../assets/Icons";
 import { useState } from "react";
-import { getFirestore, collection, getDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  getDoc,
+  doc,
+  updateDoc,
+  arrayUnion,
+} from "firebase/firestore";
 import { useUserContext } from "../userContext";
-import { db,auth } from "../firebase";
+import { db, auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-
 
 const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
   const { userId } = useUserContext();
@@ -17,7 +29,6 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
     await signOut(auth);
     navigate("/");
   };
-
 
   return (
     <div>
@@ -58,8 +69,12 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
             alt="groupchat icon"
             className="mx-5 h-[50px] w-[60px]"
           />
-          <button onClick={()=>{navigate("/channels")}}
-            className=" text-white text-xl my-auto font-montserrat font-semibold text-left">
+          <button
+            onClick={() => {
+              navigate("/channels");
+            }}
+            className=" text-white text-xl my-auto font-montserrat font-semibold text-left"
+          >
             Channels
           </button>
         </div>
@@ -90,7 +105,7 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
             </p>
           </div>
         </button>
-          <br />
+        <br />
         <button
           onClick={logoutButton}
           className=" text-white font-medium py-2 px-5 "

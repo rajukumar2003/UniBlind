@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Draggable from 'react-draggable';
-import { IoIosExpand } from "react-icons/io";
 
 const CreateConfession = () => {
     const [query, setQuery] = useState('mountains panorama forest');
@@ -14,7 +13,7 @@ const CreateConfession = () => {
     const [fontSize, setFontSize] = useState(16); // Default font size
 
     const textareaRef = useRef(null);
-    const [initialHeight, setInitialHeight] = useState(40); // Example initial height
+    // const [initialHeight, setInitialHeight] = useState(40); // Example initial height
 
     // Function to fetch images from Pixabay API
     const fetchImages = async () => {
@@ -98,7 +97,7 @@ const CreateConfession = () => {
                     <img src={selectedImage.largeImageURL} alt={selectedImage.tags} className="max-h-full max-w-full" />
                     <Draggable>
                         <textarea
-                            rows={50}
+                            rows={5}
                             cols={50}
                             id="confession-textarea"
                             ref={textareaRef}
@@ -120,7 +119,6 @@ const CreateConfession = () => {
                         className="absolute bottom-0 left-0 cursor-pointer"
                         style={{ transform: 'translate(-50%, -50%)' }}
                     >
-                        <IoIosExpand size={16} />
                     </div>
                 </div>
             )}
