@@ -1,13 +1,24 @@
 import { Fav, upvoteicon } from "../assets/Icons";
 import { useUserContext } from "../userContext";
+import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
+import Favorite from "@mui/icons-material/Favorite";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import { useState } from "react";
 
-
-const PostCard = ({ imgURL, title, message, upvote, username, postId, handleUpvote }) => {
+const PostCard = ({
+  imgURL,
+  title,
+  message,
+  upvote,
+  username,
+  postId,
+  handleUpvote,
+}) => {
   const { userId } = useUserContext();
   const [upvoteCount, setUpvoteCount] = useState(upvote);
   const [hasUpvoted, setHasUpvoted] = useState(upvote.includes(userId));
-	
+
   return (
     <div className="border-2 p-4 pb-2 mb-3 w-full h-full">
       <em className="text-md text-slate-gray font-semibold">{username}</em>
@@ -38,14 +49,17 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, handleUpvo
           disabled={hasUpvoted}
           className={`upvote-button ${hasUpvoted ? "upvoted" : ""}`}
         >
+          <FormControlLabel
+            control={
+              <Checkbox
+                icon={<FavoriteBorder />}
+                checkedIcon={<Favorite />}
+                name="checkedH"
+                checked={hasUpvoted}
+              />
+            }
+          />
           <div className="flex mt-2">
-            <img
-              src={Fav}
-              width={30}
-              height={30}
-              alt="upvoting icon"
-              className="object-contain mr-2"
-            />
             <p className="my-auto">{upvote.length}</p>
           </div>
         </button>
