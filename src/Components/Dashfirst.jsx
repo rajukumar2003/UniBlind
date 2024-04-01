@@ -28,7 +28,7 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
           className="rounded-full w-[50px] h-[50px] mr-3"
         />
         <div className="ml-1 flex flex-col my-auto">
-          <e className=" font-montserrat text-lg">{username}</e>
+          <h1 className=" font-montserrat text-lg">{username}</h1>
           <p className=" text-xs">BCA</p>
         </div>
       </div>

@@ -1,11 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import Draggable from 'react-draggable';
+import { IoIosExpand } from "react-icons/io";
 
 const CreateConfession = () => {
     const [query, setQuery] = useState('mountains panorama forest');
     const [images, setImages] = useState([]);
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [imageType, setImageType] = useState('photo');
+    const [selectedImage, setSelectedImage] = useState(images[0]);
+    const [imageType, setImageType] = useState('vector');
+    const [text, setText] = useState('');
+    const [fontColor, setFontColor] = useState('#000000');
+    const [fontStyle, setFontStyle] = useState('normal');
+    const [fontSize, setFontSize] = useState(16); // Default font size
+
+    const textareaRef = useRef(null);
+    const [initialHeight, setInitialHeight] = useState(40); // Example initial height
 
     // Function to fetch images from Pixabay API
     const fetchImages = async () => {
@@ -30,40 +39,24 @@ const CreateConfession = () => {
     // useEffect to fetch images when the component mounts
     useEffect(() => {
         fetchImages();
-    }, []);
+    }, [imageType]);
 
-    // Function to handle resizing of the selected image
-    const handleResize = (size) => {
-        setSelectedImage(prevImage => {
-            let newWidth, newHeight;
-
-            // Determine new dimensions based on the selected size
-            switch (size) {
-                case 'small':
-                    newWidth = prevImage.webformatWidth / 2;
-                    newHeight = prevImage.webformatHeight / 2;
-                    break;
-                case 'medium':
-                    newWidth = prevImage.webformatWidth;
-                    newHeight = prevImage.webformatHeight;
-                    break;
-                case 'large':
-                    newWidth = prevImage.webformatWidth * 2;
-                    newHeight = prevImage.webformatHeight * 2;
-                    break;
-                default:
-                    return prevImage;
-            }
-
-            // Update the selected image with the new dimensions
-            return {
-                ...prevImage,
-                webformatWidth: newWidth,
-                webformatHeight: newHeight
-            };
-        });
+    // Function to handle applying text changes to the image
+    const applyTextChanges = () => {
+        // Update selected image with the modified text
+        setSelectedImage(prevImage => ({
+            ...prevImage,
+            text: text
+        }));
     };
 
+    // Function to handle pressing Enter key in the text input
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault(); // Prevent default behavior (form submission)
+            setText(text + '\n'); // Append newline character
+        }
+    };
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-200">
@@ -80,7 +73,7 @@ const CreateConfession = () => {
                     <button onClick={handleSearch} className="bg-blue-500 text-white px-4 py-2 rounded-r-lg">Search</button>
                     {/*  */}
                     <label htmlFor="image-type" className="mr-4 font-bold">Image-Type</label>
-                    <select id="font-style" className="rounded-lg" onChange={(e)=>{setImageType(e.target.value)}}>
+                    <select id="font-style" className="rounded-lg" onChange={(e) => { setImageType(e.target.value) }}>
                         <option value="photo">Photo</option>
                         <option value="vector">Vector</option>
                         <option value="illustration">illustration</option>
@@ -92,7 +85,7 @@ const CreateConfession = () => {
                             key={index}
                             src={image.previewURL}
                             alt={image.tags}
-                            className="cursor-pointer hover:opacity-80"
+                            className="cursor-pointer hover:opacity-80 relative"
                             onClick={() => handleImageSelect(image)}
                         />
                     ))}
@@ -101,38 +94,76 @@ const CreateConfession = () => {
 
             {/* Center section for displaying selected image */}
             {selectedImage && (
-                <div className=" inset-0 flex justify-center items-center bg-black bg-opacity-50">
+                <div className=" inset-0 flex justify-center items-center bg-black bg-opacity-50 relative">
                     <img src={selectedImage.largeImageURL} alt={selectedImage.tags} className="max-h-full max-w-full" />
+                    <Draggable>
+                        <textarea
+                            rows={50}
+                            cols={50}
+                            id="confession-textarea"
+                            ref={textareaRef}
+                            value={text}
+                            onChange={(e) => setText(e.target.value)}
+                            onClick={handleKeyPress} // Handle Enter key press
+                            className="absolute bg-transparent border border-blue-500 text-white px-4 py-2 rounded-lg"
+                            style={{
+                                color: fontColor,
+                                fontSize: `${fontSize}px`,
+                                // height: initialHeight + 'px',
+                                zIndex: 999,
+                                resize: 'none',
+                                overflow: 'hidden'
+                            }}
+                        />
+                    </Draggable>
+                    <div
+                        className="absolute bottom-0 left-0 cursor-pointer"
+                        style={{ transform: 'translate(-50%, -50%)' }}
+                    >
+                        <IoIosExpand size={16} />
+                    </div>
                 </div>
             )}
 
             {/* Right section for sizes, font tools, and send button */}
             <div className="w-2/3 p-9">
-                {/* Sizes section */}
-                <div className="mb-6">
-                    <h2 className="text-2xl font-semibold mb-2">Sizes</h2>
-                    <div className="flex items-center">
-                        <button onClick={() => handleResize('small')} className="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg mr-2">Small</button>
-                        <button onClick={() => handleResize('medium')} className="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg mr-2">Medium</button>
-                        <button onClick={() => handleResize('large')} className="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg">Large</button>
-                    </div>
-                </div>
                 {/* Font Tools section */}
                 <div className="mb-6">
                     <h2 className="text-2xl font-semibold mb-2">Font Tools</h2>
                     <div className="flex items-center mb-5 ">
                         <label htmlFor="font-color" className="mr-2">Font Color:</label>
-                        <input type="color" id="font-color" className="rounded-lg" />
+                        <input
+                            onChange={(e) => { setFontColor(e.target.value) }}
+                            value={fontColor}
+                            type="color" id="font-color" className="rounded-lg" />
                     </div>
+
                     <div className="flex items-center mb-4">
                         <label htmlFor="font-style" className="mr-2">Font Style:</label>
-                        <select id="font-style" className="rounded-lg">
+                        <select
+                            onChange={(e) => { setFontStyle(e.target.value) }}
+                            value={fontStyle}
+                            id="font-style" className="rounded-lg">
+
                             <option value="normal">Normal</option>
                             <option value="bold">Bold</option>
-                            <option value="3D abstract alignment">3D</option>
-                            <option value="Rowani Elegant Serif Font">Rowani Elegant Serif Font</option>
+                            <option value="italic">Italic</option>
                         </select>
                     </div>
+                    <div className="mb-4">
+                        <label htmlFor="font-size" className="mr-2">Font Size:</label>
+                        <input
+                            type="number"
+                            value={fontSize}
+                            onChange={(e) => setFontSize(parseInt(e.target.value))}
+                            id="font-size"
+                            className="rounded-lg border border-gray-300 px-2 py-1"
+                        />
+                    </div>
+                </div>
+                {/* Apply Text button */}
+                <div className="mb-6">
+                    <button onClick={applyTextChanges} className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-2">Apply Text</button>
                 </div>
                 <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">Send</button>
             </div>

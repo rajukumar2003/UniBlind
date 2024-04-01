@@ -10,7 +10,7 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, handleUpvo
 	
   return (
     <div className="border-2 p-4 pb-2 mb-3 w-full h-full">
-      <em className="text-md text-slate-gray font-semibold">{username}</em>
+      <h1 className="text-md text-slate-gray font-semibold">{username}</h1>
       <div className="flex flex-row">
         <div className="flex flex-row mt-2">
           <div>
