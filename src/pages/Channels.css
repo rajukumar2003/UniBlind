@@ -1,11 +1,10 @@
-/* General Styling */
-.btn {
-    padding: 4px 8px;
-    border-radius: 4px;
-    color: white;
-    font-weight: 500;
-    transition-property: color;
-    transition-duration: 200ms;
+General Styling .btn {
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: white;
+  font-weight: 500;
+  transition-property: color;
+  transition-duration: 200ms;
 }
 
 /* .btn-primary {
@@ -19,49 +18,49 @@
 
 /* Animation */
 @keyframes fade-in-up {
-    0% {
-        opacity: 0;
-        transform: translateY(10px);
-    }
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
 
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fade-in-up {
-    animation: fade-in-up 0.3s ease-in-out;
+  animation: fade-in-up 0.3s ease-in-out;
 }
 
 /* College-Friendly Styling */
 body {
-    font-family: 'Arial', sans-serif;
-    /* Or choose a fun, modern font */
+  font-family: "Arial", sans-serif;
+  /* Or choose a fun, modern font */
 }
 
 .channels-container {
-    background-image: linear-gradient(to bottom right, #b2cef2, #2267c1);
-    /* Eye-catching gradient */
+  background-image: linear-gradient(to bottom right, #b2cef2, #2267c1);
+  /* Eye-catching gradient */
 }
 
 .channels-list-wrapper {
-    background-color: rgba(255, 255, 255, 0.8);
-    /* Semi-transparent background */
-    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
-    /* Subtle shadow */
+  background-color: rgba(255, 255, 255, 0.8);
+  /* Semi-transparent background */
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+  /* Subtle shadow */
 }
 
 .message {
-    background-color: #fff;
-    /* Stark white for contrast */
-    border-radius: 10px;
-    /* Softer message bubbles */
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  /* Stark white for contrast */
+  border-radius: 10px;
+  /* Softer message bubbles */
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .input-area {
-    background-color: #ff4000;
-    /* Light, neutral input area */
-    border-top: 2px solid #ff4000;
+  background-color: #ff4000;
+  /* Light, neutral input area */
+  border-top: 2px solid #ff4000;
 }
