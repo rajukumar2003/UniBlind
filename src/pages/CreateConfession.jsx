@@ -11,6 +11,7 @@ const CreateConfession = () => {
     const [fontColor, setFontColor] = useState('#000000');
     const [fontStyle, setFontStyle] = useState('normal');
     const [fontSize, setFontSize] = useState(16); // Default font size
+    const [onclicktext, setOnclicktext] = useState(''); // Default font size
 
     const textareaRef = useRef(null);
     // const [initialHeight, setInitialHeight] = useState(40); // Example initial height
@@ -96,7 +97,8 @@ const CreateConfession = () => {
                 <div className=" inset-0 flex justify-center items-center bg-black bg-opacity-50 relative">
                     <img src={selectedImage.largeImageURL} alt={selectedImage.tags} className="max-h-full max-w-full" />
                     <Draggable>
-                        <textarea
+                    <textarea
+                            placeholder='Enter your text here...'
                             rows={5}
                             cols={30}
                             id="confession-textarea"
@@ -104,7 +106,7 @@ const CreateConfession = () => {
                             value={text}
                             onChange={(e) => setText(e.target.value)}
                             onClick={handleKeyPress} // Handle Enter key press
-                            className="absolute bg-transparent border border-white-500 text-white px-2 py-2 rounded-lg"
+                            className="absolute bg-transparent text-black px-2 py-2 rounded-lg"
                             style={{
                                 color: fontColor,
                                 fontSize: `${fontSize}px`,
