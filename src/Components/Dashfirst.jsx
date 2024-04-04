@@ -108,7 +108,7 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
         <br />
         <button
           onClick={logoutButton}
-          className=" text-white font-medium py-2 px-5 "
+          className=" text-white font-medium py-2 px-1 border-2 border-white m-4"
         >
           Logout
         </button>

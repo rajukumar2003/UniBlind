@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Addpost, GoogleIcon, GroupChat, Logo, Proom, Vidchat } from "../assets/Icons";
-import { events, posts } from "../Constans";
+import { events } from "../Constans";
 import PostCard from "../Components/PostCard";
 import { useState, useEffect } from "react";
 import { fetchPosts } from "../postsUtils";
