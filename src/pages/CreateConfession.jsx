@@ -98,16 +98,17 @@ const CreateConfession = () => {
                     <Draggable>
                         <textarea
                             rows={5}
-                            cols={50}
+                            cols={30}
                             id="confession-textarea"
                             ref={textareaRef}
                             value={text}
                             onChange={(e) => setText(e.target.value)}
                             onClick={handleKeyPress} // Handle Enter key press
-                            className="absolute bg-transparent border border-blue-500 text-white px-4 py-2 rounded-lg"
+                            className="absolute bg-transparent border border-white-500 text-white px-2 py-2 rounded-lg"
                             style={{
                                 color: fontColor,
                                 fontSize: `${fontSize}px`,
+                                fontStyle:`${fontStyle}`,
                                 // height: initialHeight + 'px',
                                 zIndex: 999,
                                 resize: 'none',
@@ -146,6 +147,7 @@ const CreateConfession = () => {
                             <option value="normal">Normal</option>
                             <option value="bold">Bold</option>
                             <option value="italic">Italic</option>
+                            
                         </select>
                     </div>
                     <div className="mb-4">
