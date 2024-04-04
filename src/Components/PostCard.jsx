@@ -6,15 +6,7 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useState } from "react";
 
-const PostCard = ({
-  imgURL,
-  title,
-  message,
-  upvote,
-  username,
-  postId,
-  handleUpvote,
-}) => {
+const PostCard = ({ imgURL, title, message, upvote, username, postId, handleUpvote }) => {
   const { userId } = useUserContext();
   const [upvoteCount, setUpvoteCount] = useState(upvote);
   const [hasUpvoted, setHasUpvoted] = useState(upvote.includes(userId));

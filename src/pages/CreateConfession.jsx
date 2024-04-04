@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import Draggable from 'react-draggable';
+import { Rnd } from 'react-rnd'; 
+import { collection, addDoc } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { useUserContext } from '../userContext';
+import { useNavigate } from 'react-router-dom';
+import { db } from '../firebase';
 
 const CreateConfession = () => {
     const [query, setQuery] = useState('mountains panorama forest');
@@ -10,10 +15,11 @@ const CreateConfession = () => {
     const [text, setText] = useState('');
     const [fontColor, setFontColor] = useState('#000000');
     const [fontStyle, setFontStyle] = useState('normal');
-    const [fontSize, setFontSize] = useState(16); // Default font size
+    const [fontSize, setFontSize] = useState(20); // Default font size
+    const [onclicktext, setOnclicktext] = useState(''); // Default font size
 
-    const textareaRef = useRef(null);
-    // const [initialHeight, setInitialHeight] = useState(40); // Example initial height
+    const { userId } = useUserContext();
+    const navigate = useNavigate();
 
     // Function to fetch images from Pixabay API
     const fetchImages = async () => {
@@ -24,6 +30,57 @@ const CreateConfession = () => {
             console.error('Error fetching images:', error);
         }
     };
+
+
+    const sendConfession = async () => {
+        // 1. Image Upload (If Image Exists)
+        let imageUrl = null;
+        if (selectedImage) {
+            try {
+                const response = await axios.get(selectedImage.largeImageURL, {
+                    responseType: 'blob' // Set responseType to 'blob' to get binary data
+                });
+                const imageBlob = response.data; // Get the image data as a Blob
+                // Upload the image Blob to Firebase Storage
+                const storage = getStorage();
+                // Generate a unique file name for the image
+                const timestamp = Date.now();
+                const imageName = `${userId}_${timestamp}_${selectedImage.name}`;
+
+                const imageRef = ref(storage, `CreateConfession/${imageName}`);
+                await uploadBytes(imageRef, imageBlob);
+
+                // Get the download URL of the uploaded image
+                imageUrl = await getDownloadURL(imageRef);
+            } catch (error) {
+                console.error("Error uploading image:", error);
+                // Handle image upload error (e.g., display alert)
+                return; // Consider stopping form submission on image upload error
+            }
+        }
+
+        // 2. Store Post in Firestore
+        try {
+            const confessionsCollectionRef = collection(db, 'confessions');
+            await addDoc(confessionsCollectionRef, {
+                imagePath: imageUrl,
+                text: text,
+                fontColor: fontColor,
+                fontStyle: fontStyle,
+                fontSize: fontSize,
+                user: userId, // From authentication
+                createdAt: new Date()
+            });
+            alert('Confession sent!');
+            setImages([]);
+            setText('');
+            navigate('/channels');
+        } catch (error) {
+            console.error('Error sending confession:', error);
+        }
+    };
+
+
 
     // Function to handle image selection
     const handleImageSelect = (image) => {
@@ -40,22 +97,8 @@ const CreateConfession = () => {
         fetchImages();
     }, [imageType]);
 
-    // Function to handle applying text changes to the image
-    const applyTextChanges = () => {
-        // Update selected image with the modified text
-        setSelectedImage(prevImage => ({
-            ...prevImage,
-            text: text
-        }));
-    };
 
-    // Function to handle pressing Enter key in the text input
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault(); // Prevent default behavior (form submission)
-            setText(text + '\n'); // Append newline character
-        }
-    };
+
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-200">
@@ -73,8 +116,8 @@ const CreateConfession = () => {
                     {/*  */}
                     <label htmlFor="image-type" className="mr-4 font-bold">Image-Type</label>
                     <select id="font-style" className="rounded-lg" onChange={(e) => { setImageType(e.target.value) }}>
-                        <option value="photo">Photo</option>
                         <option value="vector">Vector</option>
+                        <option value="photo">Photo</option>
                         <option value="illustration">illustration</option>
                     </select>
                 </div>
@@ -95,32 +138,36 @@ const CreateConfession = () => {
             {selectedImage && (
                 <div className=" inset-0 flex justify-center items-center bg-black bg-opacity-50 relative">
                     <img src={selectedImage.largeImageURL} alt={selectedImage.tags} className="max-h-full max-w-full" />
-                    <Draggable>
+                    <Rnd
+                        default={{
+                            x: 0,
+                            y: 0,
+                            width: 200,
+                            height: 200,
+                        }}
+                        minWidth={50}
+                        minHeight={50}
+                        bounds="parent"
+                    >
                         <textarea
+                            placeholder='Enter your text here...'
                             rows={5}
                             cols={30}
                             id="confession-textarea"
-                            ref={textareaRef}
                             value={text}
                             onChange={(e) => setText(e.target.value)}
-                            onClick={handleKeyPress} // Handle Enter key press
-                            className="absolute bg-transparent border border-white-500 text-white px-2 py-2 rounded-lg"
+                            className="absolute bg-transparent text-black px-2 py-2 rounded-lg"
                             style={{
                                 color: fontColor,
                                 fontSize: `${fontSize}px`,
-                                fontStyle:`${fontStyle}`,
-                                // height: initialHeight + 'px',
+                                fontStyle: `${fontStyle}`,
+                                fontFamily: fontStyle, 
                                 zIndex: 999,
                                 resize: 'none',
                                 overflow: 'hidden'
                             }}
                         />
-                    </Draggable>
-                    <div
-                        className="absolute bottom-0 left-0 cursor-pointer"
-                        style={{ transform: 'translate(-50%, -50%)' }}
-                    >
-                    </div>
+                    </Rnd>
                 </div>
             )}
 
@@ -143,11 +190,10 @@ const CreateConfession = () => {
                             onChange={(e) => { setFontStyle(e.target.value) }}
                             value={fontStyle}
                             id="font-style" className="rounded-lg">
-
                             <option value="normal">Normal</option>
-                            <option value="bold">Bold</option>
-                            <option value="italic">Italic</option>
-                            
+                            <option value="Pacifico">Pacifico</option>
+                            <option value="Homemade Apple">Homemade Apple</option>
+                            <option value="Dancing Script">Dancing Script</option>
                         </select>
                     </div>
                     <div className="mb-4">
@@ -161,11 +207,8 @@ const CreateConfession = () => {
                         />
                     </div>
                 </div>
-                {/* Apply Text button */}
-                <div className="mb-6">
-                    <button onClick={applyTextChanges} className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-2">Apply Text</button>
-                </div>
-                <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">Send</button>
+                
+                <button onClick={sendConfession} type='button' className="bg-blue-500 text-white px-4 py-2 rounded-lg">Send</button>
             </div>
         </div>
     );

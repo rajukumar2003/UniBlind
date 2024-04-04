@@ -1,11 +1,5 @@
 import React, { useState, useRef } from "react";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  doc,
-  getDoc,
-} from "firebase/firestore";
+import { getFirestore, collection, addDoc, doc, getDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
@@ -43,7 +37,7 @@ const PostForm = ({ isOpen, onClose }) => {
     }
 
     // 2. Store Post in Firestore
-    console.log("userId:", userId); // Debugging
+    // Getting username from user document
     try {
       const userDocRef = doc(db, "users", userId);
       const userDocSnap = await getDoc(userDocRef);
