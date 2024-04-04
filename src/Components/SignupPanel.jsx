@@ -40,12 +40,13 @@ const SignupPanel = () => {
       alert("Passwords do not match");
       return;
 	  }
-	// Email Validation-------------------------------------------------------------------
-	// const validationResult = validateEmail(email);
-	// if (!validationResult.valid) {
-	// 	alert(validationResult.message);
-	// 	return;
-	// }
+    // Email Validation-------------------------------------------------------------------
+    
+	const validationResult = validateEmail(email);
+	if (!validationResult.valid) {
+		alert(validationResult.message);
+		return;
+	}
 	
 	  try {
 		  const userId = await handleEmailSignup(email, password);
