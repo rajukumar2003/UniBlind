@@ -10,6 +10,11 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, handleUpvo
   const { userId } = useUserContext();
   const [upvoteCount, setUpvoteCount] = useState(upvote);
   const [hasUpvoted, setHasUpvoted] = useState(upvote.includes(userId));
+  const [isImageClicked, setIsImageClicked] = useState(false);
+  
+  const toggleImgeClick = () => {
+    setIsImageClicked(!isImageClicked);
+  };
 
   return (
     <div className="border-2 p-4 pb-2 mb-3 w-full h-full">
@@ -26,7 +31,8 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, handleUpvo
               <img
                 src={imgURL}
                 alt="post image"
-                className="rounded-md object-contain w-[300px] h-[200px] black-shad mr-10"
+                  className={`rounded-md object-contain w-[300px] h-[200px] black-shad mr-10 cursor-pointer ${ isImageClicked ? 'w-full h-full': ''}`}
+                onClick={toggleImgeClick}
               />
             )}
           </div>

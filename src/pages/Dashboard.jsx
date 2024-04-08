@@ -35,7 +35,7 @@ const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
 			}
 		};
 		getPosts();
-	}, []);
+	}, [posts]);
 
 	// Fetching Username-------------------------------------------------------------------
 	async function fetchUsername(userId) {
