@@ -17,11 +17,18 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, handleUpvo
       <div className="flex flex-row">
         <div className="flex flex-row mt-2">
           <div>
-            <img
-              src={imgURL}
-              alt="post image"
-              className="rounded-md object-contain w-[300px] h-[200px] black-shad mr-10"
-            />
+            {imgURL && imgURL.toLowerCase().endsWith(".mp4") ? (
+              <video controls muted className="rounded-md object-contain w-[300px] h-[200px] black-shad mr-10">
+                <source src={imgURL} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : (
+              <img
+                src={imgURL}
+                alt="post image"
+                className="rounded-md object-contain w-[300px] h-[200px] black-shad mr-10"
+              />
+            )}
           </div>
         </div>
 
@@ -63,4 +70,3 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, handleUpvo
 };
 
 export default PostCard;
-

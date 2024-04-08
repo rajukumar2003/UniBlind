@@ -32,7 +32,7 @@ const PostForm = ({ isOpen, onClose }) => {
       } catch (error) {
         console.error("Error uploading image:", error);
         // Handle image upload error (e.g., display alert)
-        return; // Consider stopping form submission on image upload error
+        return; 
       }
     }
 

@@ -1,13 +1,27 @@
-import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, sendSignInLinkToEmail } from 'firebase/auth';
 import { auth } from "../firebase";
 
 
 export const handleEmailSignup = async (email, password) => {
+
     try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        return userCredential.user.uid; // Return the userId
+        const actionCodeSettings = {
+            // URL must be in the authorized domains list in the Firebase Console.
+            url: 'https://uniblind-fd882.web.app/complete-signin',  //'http://localhost:5173/complete-signin',
+            handleCodeInApp: true
+        };
+        try {
+            await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+            // Store email in local storage to remember it on return
+            window.localStorage.setItem('emailForSignIn', email);
+            alert('Sign-in link sent! Check your Christ mail.');
+        } catch (error) {
+            console.error('Error sending sign-in link:', error);
+            alert('Error sending sign-in link, please try again.');
+        }
+        
     } catch (error) {
-        throw error;  // Re-throw to allow error handling in SignupPanel
+        throw error;  
     }
 }
 

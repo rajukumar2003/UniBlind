@@ -1,7 +1,6 @@
 import React, { useState,useEffect } from "react";
 import { GoogleIcon } from "../assets/Icons";
 import { Link, useNavigate } from "react-router-dom";
-import { db } from "../firebase";
 import { useUserContext } from "../userContext";
 import { validateEmail } from "../emailValidation";
 import { initAuthListener, handleEmailSignup, handleGoogleSignup } from './authUtils'; 
@@ -39,9 +38,9 @@ const SignupPanel = () => {
     if (password !== repassword) {
       alert("Passwords do not match");
       return;
-	  }
-    // Email Validation-------------------------------------------------------------------
+    }
     
+  // Email Validation-------------------------------------------------------------------
 	const validationResult = validateEmail(email);
 	if (!validationResult.valid) {
 		alert(validationResult.message);
@@ -50,12 +49,12 @@ const SignupPanel = () => {
 	
 	  try {
 		  const userId = await handleEmailSignup(email, password);
-		  await addUserWithRandomUsername(userId, email, setuserId);
-		  navigate("/dashboard");
+		  // await addUserWithRandomUsername(userId, email, setuserId);
+		  // navigate("/dashboard");
 	  } catch (error) {
 		  const errorCode = error.code;
 		  const errorMessage = error.message;
-		  alert(errorCode, errorMessage);
+		  console.log(errorCode, errorMessage);
 	  }
   };
 
@@ -93,7 +92,7 @@ const SignupPanel = () => {
               id="floating_password"
               className="block py-1.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
-              required
+              // required
             />
             <label
               htmlFor="floating_password"
@@ -113,7 +112,7 @@ const SignupPanel = () => {
               id="floating_repassword"
               className="block py-1.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
-              required
+              // required
             />
             <label
               htmlFor="floating_repassword"
