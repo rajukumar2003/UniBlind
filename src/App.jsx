@@ -4,7 +4,6 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import ForgotPass from "./pages/ForgotPass";
 import WebNorms from "./pages/WebNorms";
-import PostForm from "./Components/PostForm";
 import Dashboard from "./pages/Dashboard";
 import { useState } from "react";
 import Channels from "./pages/Channels";
@@ -19,7 +18,6 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/post" element={<PostForm isOpen={isPostFormOpen} onClose={() => setIsPostFormOpen(false)} />} />
           <Route path="/forgotpassword" element={<ForgotPass />} />
           <Route path="/webnorms" element={<WebNorms />} />
           <Route path="/dashboard" element={<Dashboard isPostFormOpen={isPostFormOpen} setIsPostFormOpen={setIsPostFormOpen} />} />

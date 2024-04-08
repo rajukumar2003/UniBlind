@@ -104,7 +104,7 @@ const PostForm = ({ isOpen, onClose }) => {
               <button
                 className="absolute top-3 right-3 text-2xl font-semibold"
                 onClick={() => {
-                  onClose;
+                  onClose();
                   navigate("/dashboard");
                 }}
               >
