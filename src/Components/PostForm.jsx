@@ -13,6 +13,8 @@ const PostForm = ({ isOpen, onClose }) => {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   const { userId } = useUserContext();
   const fileInputRef = useRef(null);
 
@@ -20,7 +22,7 @@ const PostForm = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     // 1. Image Upload (If Image Exists)
     let imageUrl = null;
     if (image) {
@@ -32,7 +34,7 @@ const PostForm = ({ isOpen, onClose }) => {
       } catch (error) {
         console.error("Error uploading image:", error);
         // Handle image upload error (e.g., display alert)
-        return; // Consider stopping form submission on image upload error
+        return; 
       }
     }
 
@@ -55,17 +57,19 @@ const PostForm = ({ isOpen, onClose }) => {
         userId: userId,
         upvotes: [],
       });
-      alert("Post created Successfully");
+      // alert("Post created Successfully");
       // Reset form
       setTitle("");
       setDescription("");
       setImage(null);
       setImagePreview(null);
       onClose();
-      navigate("/dashboard");
+      // navigate("/dashboard");
     } catch (error) {
       console.error("Error submitting post:", error);
       // Handle general Firestore error (e.g., display alert)
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -104,7 +108,7 @@ const PostForm = ({ isOpen, onClose }) => {
               <button
                 className="absolute top-3 right-3 text-2xl font-semibold"
                 onClick={() => {
-                  onClose;
+                  onClose();
                   navigate("/dashboard");
                 }}
               >
@@ -117,6 +121,7 @@ const PostForm = ({ isOpen, onClose }) => {
                   className="w-full p-2 border-b-[1px] border-black mb-3 bg-transparent focus:border-b focus:border-black"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
+                  required
                 />
 
                 <textarea
@@ -138,9 +143,15 @@ const PostForm = ({ isOpen, onClose }) => {
                     <img src={Browsing} alt="Browse" className=" h-7 w-auto" />
                   </label>
 
-                  <button type="submit">
-                    <img src={Sent} alt="Alt" className="h-7 w-auto" />
+                  <button type="submit" disabled={isLoading} className="relative">
+                    {isLoading && (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-gray-900"></div>
+                      </div>
+                    )}
+                    {!isLoading && <img src={Sent} alt="Alt" className="h-7 w-auto" />}
                   </button>
+
                 </div>
               </form>
             </div>

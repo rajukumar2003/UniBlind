@@ -5,8 +5,7 @@ import { events } from "../Constans";
 import PostCard from "../Components/PostCard";
 import { useState, useEffect } from "react";
 import { fetchPosts } from "../postsUtils";
-import { auth } from "../firebase";
-import { getFirestore, collection, getDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { getFirestore, collection, getDoc, doc, updateDoc, arrayUnion, onSnapshot } from "firebase/firestore";
 import { useUserContext } from "../userContext";
 import { db } from "../firebase";
 import Dashfirst from "../Components/Dashfirst";
@@ -36,6 +35,27 @@ const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
 		};
 		getPosts();
 	}, []);
+
+	// Real-time Firestore Listener
+	useEffect(() => {
+		const postsRef = collection(db, "posts");
+
+		const unsubscribe = onSnapshot(postsRef, (querySnapshot) => {
+			const updatedPosts = querySnapshot.docs.map(doc => ({
+				...doc.data(),
+				id: doc.id
+			}));
+			// Sort in descending order by an appropriate field (e.g., 'createdAt')
+			updatedPosts.sort((a, b) => {
+				return b.createdAt.toDate() - a.createdAt.toDate();
+			});
+			
+			setPosts(updatedPosts);
+		});
+
+		return () => unsubscribe();
+	}, []);
+
 
 	// Fetching Username-------------------------------------------------------------------
 	async function fetchUsername(userId) {
@@ -72,7 +92,7 @@ const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
 						...post,
 						upvotes: post.upvotes.concat(userId),
 						hasUpvoted: true,
-					}; // Add user ID to upvotes
+					}; // Adding user ID to upvotes
 				} else {
 					return post;
 				}

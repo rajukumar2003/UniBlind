@@ -10,6 +10,11 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, handleUpvo
   const { userId } = useUserContext();
   const [upvoteCount, setUpvoteCount] = useState(upvote);
   const [hasUpvoted, setHasUpvoted] = useState(upvote.includes(userId));
+  const [isImageClicked, setIsImageClicked] = useState(false);
+  
+  const toggleImgeClick = () => {
+    setIsImageClicked(!isImageClicked);
+  };
 
   return (
     <div className=" p-4 pb-2 mb-3 w-full h-full">
@@ -17,11 +22,19 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, handleUpvo
       <div className="flex flex-row">
         <div className="flex flex-row mt-2">
           <div>
-            <img
-              src={imgURL}
-              alt="post image"
-              className="rounded-md object-contain w-[300px] h-[200px] black-shad mr-10"
-            />
+            {imgURL && imgURL.toLowerCase().endsWith(".mp4") ? (
+              <video controls muted className="rounded-md object-contain w-[300px] h-[200px] black-shad mr-10">
+                <source src={imgURL} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : (
+              <img
+                src={imgURL}
+                alt="post image"
+                  className={`rounded-md object-contain w-[300px] h-[200px] black-shad mr-10 cursor-pointer ${ isImageClicked ? 'w-full h-full': ''}`}
+                onClick={toggleImgeClick}
+              />
+            )}
           </div>
         </div>
 
@@ -63,4 +76,3 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, handleUpvo
 };
 
 export default PostCard;
-

@@ -3,7 +3,7 @@ import { db } from '../firebase';
 import { generateRandomUsername } from '../anonymousNames';
 
 // Function to add user with random username------------------------------------------
-export async function addUserWithRandomUsername(uid, email, setuserId) {
+export async function addUserWithRandomUsername(uid, email) {
 
     let generatedUsername = generateRandomUsername();
     let isUsernameUnique = false;
@@ -27,6 +27,5 @@ export async function addUserWithRandomUsername(uid, email, setuserId) {
         email: email,
         username: generatedUsername,
     });
-    setuserId(uid); // Setting userId in context
     console.log("User added to database");
 };

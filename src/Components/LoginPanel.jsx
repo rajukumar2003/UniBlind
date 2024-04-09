@@ -20,7 +20,8 @@ const LoginPanel = () => {
   const googleSignIn = async () => {
     try {
       const user = await handleGoogleSignup();
-      await addUserWithRandomUsername(user.uid, user.email, setuserId);
+      await addUserWithRandomUsername(user.uid, user.email);
+      setuserId(user.uid);
       navigate("/dashboard");
     } catch (error) {
       console.log(error);

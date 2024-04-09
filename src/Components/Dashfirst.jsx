@@ -9,22 +9,18 @@ import {
   Vidchat,
 } from "../assets/Icons";
 import { useState } from "react";
-import {
-  getFirestore,
-  collection,
-  getDoc,
-  doc,
-  updateDoc,
-  arrayUnion,
-} from "firebase/firestore";
+
 import { useUserContext } from "../userContext";
 import { db, auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import PostForm from "./PostForm";
+
 import GroupsOutlinedIcon from "@mui/icons-material/GroupOutlined";
 const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
   const { userId } = useUserContext();
   const navigate = useNavigate();
+  const [isPostFormOpen, setIsPostFormOpen] = useState(false);
 
   // Logout Button
   const logoutButton = async () => {
@@ -51,7 +47,7 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
           UNIVERSITY
         </p>
       </div>
-
+      <PostForm isOpen={isPostFormOpen} onClose={() => setIsPostFormOpen(false)} />
       <div className=" flex flex-col border-2 border-white m-4 glass rounded-lg">
         <div className="flex flex-row mx-3 mt-3 ">
           <GroupsOutlinedIcon className=" " />
@@ -86,11 +82,7 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
           </p>
         </div>
         <button
-          onClick={() => {
-            navigate("/post");
-            setIsPostFormOpen(true);
-          }}
-        >
+          onClick={() => setIsPostFormOpen(true)}>
           <div className="flex flex-row mx-3 mt-3 ">
             <img
               src={Addpost}
