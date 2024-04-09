@@ -10,6 +10,7 @@ import { useState } from "react";
 import { UserProvider } from "./userContext";
 import Channels from "./pages/Channels";
 import CreateConfession from "./pages/CreateConfession";
+import EventDisplay from "./Components/EventDisplay";
 
 export default function App() {
   const [isPostFormOpen, setIsPostFormOpen] = useState(false);
@@ -27,6 +28,7 @@ export default function App() {
           <Route path="/dashboard" element={<Dashboard isPostFormOpen={isPostFormOpen} setIsPostFormOpen={setIsPostFormOpen} />} />
           <Route path="/channels" element={<Channels />} />
           <Route path="/confession/create" element={<CreateConfession />} />
+          <Route path="/events" element={<EventDisplay />} />
           
         </Routes>
         </BrowserRouter>

@@ -9,7 +9,7 @@
     background: linear-gradient(
       135deg,
       rgba(255, 255, 255, 1) 0%,
-      rgba(134, 182, 246, 1) 35%
+      rgba(134, 182, 246, 1) 50%
     );
   }
 
@@ -19,18 +19,21 @@
     box-shadow: 0px 0px 7px 8px rgba(255, 255, 255, 0.9);
   }
 
-
-  .glass {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-  }
   .black-shad {
     -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 1);
     -moz-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 1);
     box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 1);
+  }
+  .opa-black-shad {
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.2);
+  }
+
+  .grey-shad {
+    -webkit-box-shadow: -2px 1px 32px -3px rgba(168,168,168,1);
+    -moz-box-shadow: -2px 1px 32px -3px rgba(168,168,168,1);
+    box-shadow: -2px 1px 32px -3px rgba(168,168,168,1);
   }
 }
 

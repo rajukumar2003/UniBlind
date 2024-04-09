@@ -1,3 +1,5 @@
+
+
 import React from "react";
 import {
   Addpost,
@@ -19,7 +21,7 @@ import { useUserContext } from "../userContext";
 import { db, auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-
+import GroupsOutlinedIcon from "@mui/icons-material/GroupOutlined";
 const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
   const { userId } = useUserContext();
   const navigate = useNavigate();
@@ -44,21 +46,16 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
         </div>
       </div>
       {/*  */}
-      <div className=" grad w-fit mx-auto mt-4 border-white border-2 rounded-lg mb-10">
-        <div className=" glass py-4 px-8 rounded-lg">
-          <p className="text-center text-2xl text-white font-semibold font-montserrat">
-            UNIVERSITY
-          </p>
-        </div>
+      <div className=" grad w-fit mx-auto mt-4 rounded-lg mb-10 opa-black-shad">
+        <p className="py-4 px-8 text-center text-2xl text-white font-semibold font-montserrat">
+          UNIVERSITY
+        </p>
       </div>
 
       <div className=" flex flex-col border-2 border-white m-4 glass rounded-lg">
         <div className="flex flex-row mx-3 mt-3 ">
-          <img
-            src={GroupChat}
-            alt="groupchat icon"
-            className="mx-5  h-[60px] w-[60px]"
-          />
+          <GroupsOutlinedIcon className=" " />
+
           <p className=" text-white text-xl my-auto font-montserrat font-semibold text-left">
             Group Chat
           </p>
@@ -108,10 +105,11 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
         <br />
         <button
           onClick={logoutButton}
-          className=" text-white font-medium py-2 px-1 border-2 border-white m-4"
+          className=" text-white opa-black-shad grad font-semibold font-montserrat py-2 px-1 m-4 rounded-lg"
         >
           Logout
         </button>
+
       </div>
     </div>
   );
