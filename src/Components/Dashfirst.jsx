@@ -20,7 +20,7 @@ import GroupsOutlinedIcon from "@mui/icons-material/GroupOutlined";
 const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
   const { userId } = useUserContext();
   const navigate = useNavigate();
-  const [isPostFormOpen, setIsPostFormOpen] = useState(false);
+  // const [isPostFormOpen, setIsPostFormOpen] = useState(false);
 
   // Logout Button
   const logoutButton = async () => {

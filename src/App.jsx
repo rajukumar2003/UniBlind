@@ -8,11 +8,8 @@ import Dashboard from "./pages/Dashboard";
 import { useState } from "react";
 import Channels from "./pages/Channels";
 import CreateConfession from "./pages/CreateConfession";
-<<<<<<< HEAD
 import EventDisplay from "./Components/EventDisplay";
-=======
 import SignInHandler from './pages/SignInHandler'
->>>>>>> a9b4684cf395c531601e0db1959c9e8945d0ac78
 
 export default function App() {
   const [isPostFormOpen, setIsPostFormOpen] = useState(false);
@@ -27,11 +24,8 @@ export default function App() {
           <Route path="/dashboard" element={<Dashboard isPostFormOpen={isPostFormOpen} setIsPostFormOpen={setIsPostFormOpen} />} />
           <Route path="/channels" element={<Channels />} />
           <Route path="/confession/create" element={<CreateConfession />} />
-<<<<<<< HEAD
           <Route path="/events" element={<EventDisplay />} />
-=======
           <Route path="/complete-signin" element={<SignInHandler />} />
->>>>>>> a9b4684cf395c531601e0db1959c9e8945d0ac78
           
         </Routes>
         </BrowserRouter>

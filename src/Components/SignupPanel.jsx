@@ -42,25 +42,6 @@ const SignupPanel = () => {
       alert("Passwords do not match");
       return;
     }
-<<<<<<< HEAD
-    // Email Validation-------------------------------------------------------------------
-
-    const validationResult = validateEmail(email);
-    if (!validationResult.valid) {
-      alert(validationResult.message);
-      return;
-    }
-
-    try {
-      const userId = await handleEmailSignup(email, password);
-      await addUserWithRandomUsername(userId, email, setuserId);
-      navigate("/dashboard");
-    } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      alert(errorCode, errorMessage);
-    }
-=======
     
   // Email Validation-------------------------------------------------------------------
 	const validationResult = validateEmail(email);
@@ -78,7 +59,6 @@ const SignupPanel = () => {
 		  const errorMessage = error.message;
 		  console.log(errorCode, errorMessage);
 	  }
->>>>>>> a9b4684cf395c531601e0db1959c9e8945d0ac78
   };
 
   return (

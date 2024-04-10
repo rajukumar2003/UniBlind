@@ -17,3 +17,4 @@ const EventCard = ({ imgURL, org, date, venue, title }) => {
 };
 
 export default EventCard;
+
