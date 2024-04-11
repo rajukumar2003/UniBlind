@@ -6,7 +6,7 @@ import CodingClub from '../Components/CodingClub';
 import Announcement from '../Components/Announcement';
 
 const Channels = () => {
-    const [selectedChannel, setSelectedChannel] = useState('Coding Club');
+    const [selectedChannel, setSelectedChannel] = useState('Announcement');
     const [channelsData, setChannelsData] = useState([
         { name: 'Announcement', id: 'announcement' },
         { name: 'Confessions', id: 'confessions' },
