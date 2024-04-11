@@ -6,7 +6,7 @@ export default {
       fontFamily: {
         palanquin: ["Palanquin", "sans-serif"],
         montserrat: ["Montserrat", "sans-serif"],
-        worksans: ["work sans", "Sans-serif"],
+        monasans: ["Mona Sans", "Sans-serif"],
       },
       backgroundImage: {
         Loginbg: "url('./src/assets/Images/Login_bg.svg')",
