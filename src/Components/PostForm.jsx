@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { getFirestore, collection, addDoc, doc, getDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db } from "../firebase";
@@ -34,7 +34,7 @@ const PostForm = ({ isOpen, onClose }) => {
       } catch (error) {
         console.error("Error uploading image:", error);
         // Handle image upload error (e.g., display alert)
-        return; 
+        return;
       }
     }
 
@@ -57,14 +57,12 @@ const PostForm = ({ isOpen, onClose }) => {
         userId: userId,
         upvotes: [],
       });
-      // alert("Post created Successfully");
       // Reset form
       setTitle("");
       setDescription("");
       setImage(null);
       setImagePreview(null);
       onClose();
-      // navigate("/dashboard");
     } catch (error) {
       console.error("Error submitting post:", error);
       // Handle general Firestore error (e.g., display alert)
@@ -84,11 +82,23 @@ const PostForm = ({ isOpen, onClose }) => {
     reader.readAsDataURL(file);
   };
 
+  useEffect(() => {
+    // Add event listener to handle click outside popup
+    const handleClickOutside = (e) => {
+      if (!isOpen || e.target.closest(".glass")) return;
+      onClose();
+    };
+    document.body.addEventListener("click", handleClickOutside);
+    // Cleanup event listener on component unmount
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, [isOpen, onClose]);
+
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center ${
-        isOpen ? "block" : "hidden"
-      }`}
+      className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center ${isOpen ? "block" : "hidden"
+        }`}
     >
       <div className="glass rounded-lg z-0">
         <div className=" m-2 bg-white shad bg-opacity-90 flex flex-col rounded-lg">
@@ -117,7 +127,7 @@ const PostForm = ({ isOpen, onClose }) => {
               <form onSubmit={handleSubmit}>
                 <input
                   type="text"
-                  placeholder="Type Your Title..."
+                  placeholder="Your Title..."
                   className="w-full p-2 border-b-[1px] border-black mb-3 bg-transparent focus:border-b focus:border-black"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
@@ -125,7 +135,7 @@ const PostForm = ({ isOpen, onClose }) => {
                 />
 
                 <textarea
-                  placeholder="Type Description..."
+                  placeholder="Your Description..."
                   className="w-full p-2 border-b-[1px] border-black mb-3 bg-transparent overflow-y-auto"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}

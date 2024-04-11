@@ -1,5 +1,3 @@
-
-
 import React from "react";
 import {
   Addpost,
@@ -15,8 +13,8 @@ import { db, auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import PostForm from "./PostForm";
-
 import GroupsOutlinedIcon from "@mui/icons-material/GroupOutlined";
+
 const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
   const { userId } = useUserContext();
   const navigate = useNavigate();
@@ -49,13 +47,13 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
       </div>
       <PostForm isOpen={isPostFormOpen} onClose={() => setIsPostFormOpen(false)} />
       <div className=" flex flex-col border-2 border-white m-4 glass rounded-lg">
-        <div className="flex flex-row mx-3 mt-3 ">
-          <GroupsOutlinedIcon className=" " />
+        {/* <div className="flex flex-row mx-3 mt-3 ">
 
+          <GroupsOutlinedIcon className=" " />
           <p className=" text-white text-xl my-auto font-montserrat font-semibold text-left">
             Group Chat
           </p>
-        </div>
+        </div> */}
         <div className="flex flex-row mx-3 mt-3 ">
           <img
             src={Proom}
