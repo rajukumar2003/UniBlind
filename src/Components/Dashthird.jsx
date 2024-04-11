@@ -2,16 +2,23 @@ import React from "react";
 import EventCard from "../Components/EventCard";
 import { Link,useNavigate } from "react-router-dom";
 import { events } from "../Constans";
+import EventDisplay  from "./EventDisplay";
+import { useState } from "react";
+
+
 
 const Dashthird = () => {
   const navigate = useNavigate();
+  const [isEventDisplayOpen, setIsEventDisplayOpen] = useState(false);
+
 
   return (
     
     <div className="h-screen">
             <button
-            onClick={() => {
-              navigate("/events");
+              onClick={() => {
+                setIsEventDisplayOpen(true);
+              // navigate("/events");
             }}
           >
             <div className="mt-20 glass w-fit mx-5 rounded-lg mb-5 opa-black-shad grad">
@@ -43,7 +50,7 @@ const Dashthird = () => {
         <Link to="/">Contact-Us</Link>
         <Link to="/">About-Us</Link>
       </div>
-
+      <EventDisplay eventOpen={isEventDisplayOpen} eventClose={() => setIsEventDisplayOpen(false)} />
     </div>
   );
 };

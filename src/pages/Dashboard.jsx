@@ -11,12 +11,13 @@ import { db } from "../firebase";
 import Dashfirst from "../Components/Dashfirst";
 import Dashthird from "../Components/Dashthird";
 
-const Dashboard = ({ isPostFormOpen, setIsPostFormOpen }) => {
+const Dashboard = () => {
 	const { userId } = useUserContext();
 	const [username, setUsername] = useState("");
 	const [posts, setPosts] = useState([]);
 	const [upvote, setUpvote] = useState(0);
 	const [hasUpvoted, setHasUpvoted] = useState("");
+	const [isPostFormOpen, setIsPostFormOpen] = useState(false);
 
 	const navigate = useNavigate();
 
