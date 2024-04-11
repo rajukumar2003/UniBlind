@@ -93,24 +93,25 @@ const CodingClub = () => {
         ))}
       </ul>
 
-      <div className="input-area flex items-center right-0 w-3/4 fixed bottom-1">
+      <div className="flex w-[78%] fixed bottom-1">
         <input
+          required
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           type="text"
           placeholder="Type your message..."
-          className="flex-1 p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-indigo-500"
+          className="flex-1 p-2 border border-gray-300 focus:outline-none focus:ring-indigo-500"
         />
-        <div className="bg-black rounded-lg p-2">
+        <div className=" rounded-lg border-2 border-white">
           <button
-            className="btn btn-secondary mr-2 text-white"
+            className="bg-indigo-500 text-white p-2"
             onClick={() => setIsCodeSnippetModalOpen(true)}
           >
             Add Code Snippet
           </button>
           <button
             onClick={handleSubmit}
-            className="btn btn-primary ml-2 text-white"
+            className="bg-indigo-500 text-white rounded-r-lg p-2 border-l-2 border-white"
           >
             Send
           </button>

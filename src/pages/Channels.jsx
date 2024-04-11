@@ -18,9 +18,15 @@ const Channels = () => {
 
   return (
     <div className="channels-container h-screen bg-gray-100 flex ">
-      <div className="channels-list-wrapper flex flex-col items-start p-4 w-1/5 shadow-md bg-[#86B6F6]">
+      <div className="channels-list-wrapper flex flex-col items-start p-4 w-1/5 shadow-md bg-black">
         <div className="flex w-full mb-1">
-          <img src={Logo} className="ml-3 mr-10 h-20 w-20" />
+          <button
+            onClick={() => {
+              navigate("/dashboard");
+            }}
+          >
+            <img src={Logo} className="ml-3 mr-10 h-20 w-20" />
+          </button>
           <h2 className="text-3xl text-white font-bold my-auto">Channels</h2>
         </div>
 
@@ -40,7 +46,7 @@ const Channels = () => {
           {channelsData.map((channel) => (
             <li
               key={channel.id}
-              className={`p-2 pl-2 my-3 text-white rounded-lg hover:bg-black hover:text-white transition-colors duration-200 w-[90%] cursor-pointer ${selectedChannel === channel.name ? "bg-indigo-500 text-white" : ""}`}
+              className={`p-2 pl-2 my-3 text-white rounded-lg hover:bg-white hover:text-black transition-colors duration-200 w-[90%] cursor-pointer ${selectedChannel === channel.name ? "bg-indigo-500 text-white" : ""}`}
               onClick={() => setSelectedChannel(channel.name)}
             >
               <b>#{channel.name}</b>
@@ -50,7 +56,7 @@ const Channels = () => {
       </div>
 
       <div className="message-area flex-1 overflow-y-auto relative">
-        <h2 className="text-3xl font-bold mb-4 fixed z-10 w-full bg-[#86B6F6] p-4 font-montserrat text-white">
+        <h2 className="text-3xl font-bold mb-4 fixed z-10 w-full bg-black p-4 font-montserrat text-white">
           {selectedChannel}
         </h2>
 
