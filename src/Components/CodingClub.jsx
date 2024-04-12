@@ -67,6 +67,8 @@ const CodingClub = () => {
       });
   };
 
+  
+
   return (
     <div className="chat-container pt-20 pr-2 pl-2">
       <ul className="chat-messages flex flex-col-reverse gap-3 overflow-y-auto mb-12 ">
@@ -93,7 +95,7 @@ const CodingClub = () => {
         ))}
       </ul>
 
-      <div className="flex w-[78%] fixed bottom-1">
+      <div className="flex w-[78%] fixed bottom-0">
         <input
           required
           value={newMessage}

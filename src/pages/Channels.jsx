@@ -16,10 +16,12 @@ const Channels = () => {
   ]);
   const navigate = useNavigate();
 
+  
+
   return (
     <div className="channels-container h-screen bg-gray-100 flex ">
       <div className="channels-list-wrapper flex flex-col items-start p-4 w-1/5 shadow-md bg-black">
-        <div className="flex w-full mb-1">
+        <div className=" w-full mb-1">
           <button
             onClick={() => {
               navigate("/dashboard");
@@ -27,7 +29,9 @@ const Channels = () => {
           >
             <img src={Logo} className="ml-3 mr-10 h-20 w-20" />
           </button>
-          <h2 className="text-3xl text-white font-bold my-auto">Channels</h2>
+          <h2 className="text-3xl text-white font-bold my-auto ml-5">
+            Channels
+          </h2>
         </div>
 
         <div className="w-[80%] pt-2 relative ml-5 text-gray-600">
