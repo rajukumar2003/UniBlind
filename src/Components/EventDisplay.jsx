@@ -1,6 +1,5 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import React, { useState, useEffect } from "react";
+import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 import { TbHexagonFilled } from "react-icons/tb";
 
@@ -8,13 +7,22 @@ const EventDisplay = ({ eventOpen, eventClose }) => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const eventsCollectionRef = collection(db, "events");
-      const data = await getDocs(eventsCollectionRef);
-      setEvents(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-    fetchData();
+    const postRef = collection(db, "events");
+    const unsubscribe = onSnapshot(postRef, (snapshot) => {
+      const updatedEvents = [];
+      snapshot.forEach((doc) => {
+        updatedEvents.push({ ...doc.data(), id: doc.id });
+      });
+
+      updatedEvents.sort((a, b) => new Date(a.deadlineDate) - new Date(b.deadlineDate));
+
+      setEvents(updatedEvents);
+    });
+
+    // Cleanup function
+    return () => unsubscribe();
   }, []);
+
 
   useEffect(() => {
     // Add event listener to handle click outside popup
@@ -28,6 +36,7 @@ const EventDisplay = ({ eventOpen, eventClose }) => {
       document.body.removeEventListener("click", handleClickOutside);
     };
   }, [eventOpen, eventClose]);
+
   const [isImageClicked, setIsImageClicked] = useState(false);
 
   const toggleImgeClick = () => {
@@ -49,22 +58,31 @@ const EventDisplay = ({ eventOpen, eventClose }) => {
           {events.map((event, index) => (
             <div className=" h-full py-3" key={index}>
               <div className="flex justify-center">
-                <img
-                  src={event.imgLink}
-                  className={`object-contain h-[350px] w-[500px] ${ isImageClicked ? "w-[600px] h-[800px]" : ""}`}
-                  alt="Event"
-                  onClick={toggleImgeClick}
-                />
+                {event.imagePath.split("?")[0].endsWith(".pdf") ? (
+                  <iframe
+                    src={event.imagePath}
+                    type="event/pdf"
+                    className="object-contain h-[350px] w-[500px]"
+                  />
+                ) : (
+                  <img
+                    src={event.imagePath}
+                    className={`object-contain h-[350px] w-[500px] ${isImageClicked ? "w-[600px] h-[800px]" : ""
+                      }`}
+                    alt="Event"
+                    onClick={toggleImgeClick}
+                  />
+                )}
               </div>
               <div className="text-center mb-5">
                 <p className="font-montserrat">
                   <span className="font-bold text-xl">{event.eventName}</span>
                   <br />
                   <span className="font-semibold text-md text-right text-[#ff4000]">
-                    {event.deadline}
+                    {event.deadlineDate}
                   </span>
                   <br />
-                  <span>{event.Description}</span>
+                  <span>{event.description}</span>
                 </p>
               </div>
               <div className="flex items-center justify-center text-center text-md font-medium w-4/5  mx-auto py-1">
