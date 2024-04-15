@@ -1,15 +1,36 @@
 import React from "react";
 import EventCard from "../Components/EventCard";
 import { Link,useNavigate } from "react-router-dom";
-import { events } from "../Constans";
+// import { events } from "../Constans";
 import EventDisplay  from "./EventDisplay";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../firebase";
 
 
 
 const Dashthird = () => {
-  const navigate = useNavigate();
+  const[events,setEvents]=useState([]);
   const [isEventDisplayOpen, setIsEventDisplayOpen] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const postRef = collection(db, "events");
+    const unsubscribe = onSnapshot(postRef, (snapshot) => {
+      const updatedEvents = [];
+      snapshot.forEach((doc) => {
+        updatedEvents.push({ ...doc.data(), id: doc.id });
+      });
+
+      updatedEvents.sort((a, b) => new Date(a.deadlineDate) - new Date(b.deadlineDate));
+
+      setEvents(updatedEvents);
+    });
+
+    // Cleanup function
+    return () => unsubscribe();
+  }, []);
 
 
   return (
@@ -34,10 +55,10 @@ const Dashthird = () => {
         {events.map((event, index) => (
           <EventCard
             key={index}
-            imgURL={event.imgURL}
-            title={event.title}
-            org={event.org}
-            date={event.date}
+            // imgURL={event.imgPath}
+            title={event.eventName}
+            // org={event.org}
+            date={event.deadlineDate}
             venue={event.venue}
           />
         ))}

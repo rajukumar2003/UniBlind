@@ -12,10 +12,13 @@ import { useUserContext } from "../userContext";
 import { db, auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import EventForm from "./eventform";
 import PostForm from "./PostForm";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupOutlined";
 
 const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
+
+  const [isEventFormOpen, setIsEventFormOpen] = useState(false);
   const { userId } = useUserContext();
   const navigate = useNavigate();
   // const [isPostFormOpen, setIsPostFormOpen] = useState(false);
@@ -46,6 +49,8 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
         </p>
       </div>
       <PostForm isOpen={isPostFormOpen} onClose={() => setIsPostFormOpen(false)} />
+      <EventForm isOpen={isEventFormOpen} onClose={() => setIsEventFormOpen(false)} />
+
       <div className=" flex flex-col border-2 border-white m-4 glass rounded-lg">
         {/* <div className="flex flex-row mx-3 mt-3 ">
 
@@ -92,7 +97,21 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
             </p>
           </div>
         </button>
-        <br />
+            {/* Add Event Button  */}
+        <button
+          onClick={() => setIsEventFormOpen(true)}>
+          <div className="flex flex-row mx-3 mt-3 ">
+            <img
+              src={Addpost}
+              alt="groupchat icon"
+              className="mx-5 h-[50px] w-[60px]"
+            />
+            <p className=" text-white text-xl my-auto font-montserrat font-semibold text-left">
+              Add Event
+            </p>
+          </div>
+        </button>
+
         <button
           onClick={logoutButton}
           className=" text-white opa-black-shad grad font-semibold font-montserrat py-2 px-1 m-4 rounded-lg"
