@@ -67,16 +67,14 @@ const CodingClub = () => {
       });
   };
 
-  
-
   return (
-    <div className="chat-container pt-20 pr-2 pl-2">
-      <ul className="chat-messages flex flex-col-reverse gap-3 overflow-y-auto mb-12 ">
+    <div className="chat-container pt-20 pr-2 pl-2 ">
+      <ul className="chat-messages flex flex-col-reverse gap-3 mb-12 ">
         {messages.map((message, index) => (
           <li
             key={message.id || index}
-            className={`message-item ${message.uid === userId ? "self-end" : ""} max-w-sm 
-                            ${message.uid === userId ? "bg-indigo-500 text-white rounded-l-lg" : "bg-gray-200 rounded-r-lg"} p-3 shadow-md`}
+            className={`message-item ${message.uid === userId ? "self-end" : ""} max-w-sm  
+                            ${message.uid === userId ? "bg-indigo-500 text-white rounded-l-lg" : "bg-gray-200 rounded-r-lg"} break-word p-3 shadow-md`}
           >
             {message.isCodeSnippet ? (
               <pre>
@@ -86,7 +84,7 @@ const CodingClub = () => {
               <p>{message.text}</p>
             )}
             <span
-              className={`time-stamp text-xs 
+              className={`time-stamp text-xs
                             ${message.uid === userId ? "text-gray-300" : "text-gray-600"}`}
             >
               {message.time}
