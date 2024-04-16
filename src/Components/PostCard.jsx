@@ -3,17 +3,43 @@ import { useUserContext } from "../userContext";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import Checkbox from "@mui/material/Checkbox";
+import DeleteIcon from '@mui/icons-material/Delete';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { IconButton, Button } from "@mui/material";
 import { useState } from "react";
+import { doc, deleteDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
-const PostCard = ({ imgURL, title, message, upvote, username, postId, handleUpvote }) => {
-  const { userId } = useUserContext();
+const PostCard = ({ imgURL, title, message, upvote, username, postId, postOwnerUserId, handleUpvote }) => {
+  const {userId} = useUserContext();
   const [upvoteCount, setUpvoteCount] = useState(upvote);
   const [hasUpvoted, setHasUpvoted] = useState(upvote.includes(userId));
   const [isImageClicked, setIsImageClicked] = useState(false);
-  
+  const [isDeleteMenuOpen, setIsDeleteMenuOpen] = useState(false);
+
+  const toggleDeleteMenu = () => {
+    setIsDeleteMenuOpen(!isDeleteMenuOpen);
+  };
+
   const toggleImgeClick = () => {
     setIsImageClicked(!isImageClicked);
+  };
+
+  const handleDeleteClick = async () => {
+    if (!window.confirm('Are you sure you want to delete this post?')) {
+      return;
+    }
+
+    try {
+      const postRef = doc(db, 'posts', postId);
+      await deleteDoc(postRef);
+      console.log('Post deleted successfully');
+      // ... (Local state update if needed) ...  
+    } catch (error) {
+      console.error('Error deleting post:', error);
+    }
+    setIsDeleteMenuOpen(false);
   };
 
   return (
@@ -31,7 +57,7 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, handleUpvo
               <img
                 src={imgURL}
                 alt="post image"
-                  className={`rounded-md object-contain w-[300px] h-[200px] black-shad mr-10 cursor-pointer ${ isImageClicked ? 'w-full h-full': ''}`}
+                className={`rounded-md object-contain w-[300px] h-[200px] black-shad mr-10 cursor-pointer ${isImageClicked ? 'w-full h-full' : ''}`}
                 onClick={toggleImgeClick}
               />
             )}
@@ -45,6 +71,26 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, handleUpvo
           <p className="mt-6 max-w-md text-sm font-montserrat">{message}</p>
         </div>
       </div>
+      {/* Delete Menu */}
+      {userId === postOwnerUserId && ( // Check if the current user is the owner of the post
+        <div className="flex items-center justify-end">
+          <IconButton onClick={toggleDeleteMenu}>
+            <MoreVertIcon fontSize="small" />
+          </IconButton>
+
+          {/* Consider using Menu and MenuItem components for a more robust menu */}
+          <div className={` top-full right-0 bg-white shadow-md rounded p-2 ${isDeleteMenuOpen ? 'block' : 'hidden'}`}>
+            <Button
+              variant="text"
+              color="error"
+              startIcon={<DeleteIcon />}
+              onClick={handleDeleteClick}
+            >
+              Delete
+            </Button>
+          </div>
+        </div>
+      )}
       <div className="mt-3 justify-start">
         <button
           onClick={() => {
@@ -56,7 +102,7 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, handleUpvo
         >
           <div className="flex">
             <div className="flex mr-3">
-              <p className=" my-auto">{upvote.length}</p>
+              <p className="my-auto">{upvote.length}</p>
             </div>
             <FormControlLabel
               control={
