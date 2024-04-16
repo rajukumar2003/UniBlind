@@ -5,6 +5,8 @@ import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../userContext";
 import { Browsing, Sent } from "../assets/Icons/index";
+import LoadingSpinner from "./LoadingSpinner";
+import { set } from "firebase/database";
 
 const postsCollectionRef = collection(db, "events");
 
@@ -62,6 +64,7 @@ const  EventForm= ({ isOpen, onClose }) => {
             setDescription("");
             setImage(null);
             setImagePreview(null);
+            setDeadlineDate("");
             onClose();
         } catch (error) {
             console.error("Error submitting post:", error);
@@ -164,8 +167,8 @@ const  EventForm= ({ isOpen, onClose }) => {
 
                                     <button type="submit" disabled={isLoading} className="relative">
                                         {isLoading && (
-                                            <div className="absolute inset-0 flex items-center justify-center">
-                                                <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-gray-900"></div>
+                                            <div className="loading-spinner-container">
+                                                <LoadingSpinner />
                                             </div>
                                         )}
                                         {!isLoading && <img src={Sent} alt="Alt" className="h-7 w-auto" />}
