@@ -1,5 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
-import { getFirestore, collection, addDoc, doc, getDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
@@ -99,14 +105,13 @@ const PostForm = ({ isOpen, onClose }) => {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center ${isOpen ? "block" : "hidden"
-        }`}
+      className={`max-sm:z-10 fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center ${isOpen ? "block" : "hidden"}`}
     >
       <div className="glass rounded-lg z-0">
         <div className=" m-2 bg-white shad bg-opacity-90 flex flex-col rounded-lg">
           <h2 className="py-3 text-2xl font-semibold text-center">NEW POST</h2>
-          <div className=" py-4 border-t-[1px] border-black flex flex-row ">
-            <div className="image-preview-container w-[300px] h-auto p-2 flex items-center justify-center">
+          <div className=" py-4 border-t-[1px] border-black flex flex-row max-sm:flex-col ">
+            <div className="image-preview-container w-[300px] h-auto p-2 flex items-center justify-center max-sm:mx-auto">
               {imagePreview && (
                 <img
                   src={imagePreview}
@@ -155,15 +160,20 @@ const PostForm = ({ isOpen, onClose }) => {
                     <img src={Browsing} alt="Browse" className=" h-7 w-auto" />
                   </label>
 
-                  <button type="submit" disabled={isLoading} className="relative">
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="relative"
+                  >
                     {isLoading && (
                       <div className="loading-spinner-container">
                         <LoadingSpinner />
                       </div>
                     )}
-                    {!isLoading && <img src={Sent} alt="Alt" className="h-7 w-auto" />}
+                    {!isLoading && (
+                      <img src={Sent} alt="Alt" className="h-7 w-auto" />
+                    )}
                   </button>
-
                 </div>
               </form>
             </div>

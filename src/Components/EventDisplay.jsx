@@ -14,7 +14,9 @@ const EventDisplay = ({ eventOpen, eventClose }) => {
         updatedEvents.push({ ...doc.data(), id: doc.id });
       });
       // Sorting events by deadline date
-      updatedEvents.sort((a, b) => new Date(a.deadlineDate) - new Date(b.deadlineDate));
+      updatedEvents.sort(
+        (a, b) => new Date(a.deadlineDate) - new Date(b.deadlineDate)
+      );
 
       setEvents(updatedEvents);
     });
@@ -22,7 +24,6 @@ const EventDisplay = ({ eventOpen, eventClose }) => {
     // Cleanup function
     return () => unsubscribe();
   }, []);
-
 
   useEffect(() => {
     // Add event listener to handle click outside popup
@@ -49,7 +50,7 @@ const EventDisplay = ({ eventOpen, eventClose }) => {
     >
       <div
         id="lmao"
-        className="bg-white bg-opacity-90 m-2  glass shad w-2/3 h-5/6 rounded-xl overflow-auto no-scrollbar overflow-y-auto"
+        className="bg-white bg-opacity-90 m-2  glass shad w-11/12 h-5/6 rounded-xl overflow-auto no-scrollbar overflow-y-auto"
       >
         <p className="fixed z-20 w-full text-center border-b border-black rounded-t-xl text-2xl font-bold font-montserrat">
           Events
@@ -67,8 +68,9 @@ const EventDisplay = ({ eventOpen, eventClose }) => {
                 ) : (
                   <img
                     src={event.imagePath}
-                    className={`object-contain h-[350px] w-[500px] ${isImageClicked ? "w-[600px] h-[800px]" : ""
-                      }`}
+                    className={`object-contain h-[350px] w-[500px] ${
+                      isImageClicked ? "w-[600px] h-[800px]" : ""
+                    }`}
                     alt="Event"
                     onClick={toggleImgeClick}
                   />
@@ -82,7 +84,9 @@ const EventDisplay = ({ eventOpen, eventClose }) => {
                     {event.deadlineDate}
                   </span>
                   <br />
-                  <span className=" text-sm max-w-prose overflow-y-auto max-h-40">{event.description}</span>
+                  <span className=" text-sm max-w-prose overflow-y-auto max-h-40">
+                    {event.description}
+                  </span>
                 </p>
               </div>
               <div className="flex items-center justify-center text-center text-md font-medium w-4/5  mx-auto py-1">
