@@ -6,20 +6,20 @@ const Hero = () => {
 
   return (
     <section>
-      <div className="absolute inset-0 flex flex-col justify-center items-start text-left text-white font-worksans leading-none m-28">
+      <div className="absolute inset-0 flex flex-col justify-center items-start text-left text-white font-worksans leading-none m-28 max-sm:m-12">
         <p>
-          <span className="text-[#3759C1] text-[200px] font-sans font-bold m-0 drop-shadow-lg">
+          <span className="text-[#3759C1] text-[200px] max-sm:text-[150px] font-sans font-bold m-0 drop-shadow-lg">
             Uni
           </span>
           <br />
-          <span className="text-[250px] font-bold m-0 font-outline-2 drop-shadow-lg">
+          <span className="text-[250px] max-sm:text-[150px] font-bold m-0 font-outline-2 drop-shadow-lg">
             Blind
           </span>
         </p>
-        <p className="text-[30px] ml-3">
+        <p className="text-[30px] max-sm:text-[17px] ml-3 max-sm:glass max-sm:p-3 max-sm:text-[#3759C1]">
           Connect Anonymously with your Acquintances
         </p>
-        <div className="flex justify-center">
+        <div className="flex justify-center ">
           <button
             onClick={() => {
               navigate("./login");

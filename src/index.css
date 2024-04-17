@@ -12,19 +12,19 @@
       rgba(134, 182, 246, 1) 50%
     );
   }
-  .gradlol {
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.6) 0%,
-      rgba(134, 182, 246, 1) 50%
-    );
-  }
 
   .glass {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(20px);
+  }
+
+  .nav-glass {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
   }
 
   .break-word {
