@@ -63,6 +63,7 @@ const PostForm = ({ isOpen, onClose }) => {
         username: username,
         userId: userId,
         upvotes: [],
+        reports: 0 
       });
       // Reset form
       setTitle("");

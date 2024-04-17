@@ -9,7 +9,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { IconButton, Button } from "@mui/material";
 import { useState } from "react";
-import { doc, deleteDoc } from "firebase/firestore";
+import { doc, deleteDoc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
 const PostCard = ({
@@ -56,8 +56,17 @@ const PostCard = ({
       return;
     }
     try {
-      alert("Post reported successfully");
-      // ... (Local state update if needed) ...
+      const postRef = doc(db, 'posts', postId);
+      const postSnap = await getDoc(postRef);
+      const { reports } = postSnap.data();
+      if (reports > 2) {
+        await deleteDoc(postRef);
+        alert('Post deleted due to multiple reports');
+        return;
+      }
+      await updateDoc(postRef, { reports : reports + 1});
+      
+      alert('Post reported successfully');
     } catch (error) {
       console.error("Error reporting post:", error);
     }
