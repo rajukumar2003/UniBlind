@@ -65,7 +65,7 @@ const Dashthird = () => {
       </div>
 
       <div className="text-xl grad text-white flex flex-col items-center m-5 rounded-lg py-5 font-montserrat font-semibold opa-black-shad">
-        <Link to="/">Feedback</Link>
+        <Link to="/" className='hover:text-black '>Feedback</Link>
         <Link to="/">Help</Link>
         <Link to="/">Customer Care</Link>
         <Link to="/">Contact-Us</Link>

@@ -89,21 +89,18 @@ const CodingClub = () => {
             className={`message-item  ${message.uid === userId ? "self-end" : ""} max-w-sm rounded-lg p-3 shadow-md 
               ${message.uid === userId ? "bg-indigo-500 text-white" : "bg-gray-100 text-gray-800"}`}
           >
-            <div className=" flex justify-between leading-7">
-              <p className=" font-semibold text-sm"> KajuWalaRaju </p>
-              <div className="meta-info flex items-center text-[10px] text-gray-500">
-                <span>{new Date(message.timestamp).toLocaleDateString()}</span>
-                <span className="mx-1">•</span>
-                <span>{new Date(message.timestamp).toLocaleTimeString()}</span>
-              </div>
-            </div>
             {message.isCodeSnippet ? (
               <pre className="bg-gray-800 text-white rounded p-2 w-fit">
                 <code>{message.text}</code>
               </pre>
             ) : (
-              <p className=" break-word">{message.text}</p>
+              <p>{message.text}</p>
             )}
+            <div className="meta-info flex items-center text-xs text-gray-800">
+              <span>{new Date(message.timestamp).toLocaleDateString()}</span>
+              <span className="mx-1">•</span>
+              <span>{new Date(message.timestamp).toLocaleTimeString()}</span>
+            </div>
           </li>
         ))}
       </ul>

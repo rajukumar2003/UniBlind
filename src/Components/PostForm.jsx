@@ -5,6 +5,7 @@ import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../userContext";
 import { Browsing, Sent } from "../assets/Icons/index";
+import LoadingSpinner from "./LoadingSpinner";
 
 const postsCollectionRef = collection(db, "posts");
 
@@ -22,7 +23,6 @@ const PostForm = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
     // 1. Image Upload (If Image Exists)
     let imageUrl = null;
     if (image) {
@@ -37,6 +37,7 @@ const PostForm = ({ isOpen, onClose }) => {
         return;
       }
     }
+    setIsLoading(true);
 
     // 2. Store Post in Firestore
     // Getting username from user document
@@ -155,8 +156,8 @@ const PostForm = ({ isOpen, onClose }) => {
 
                   <button type="submit" disabled={isLoading} className="relative">
                     {isLoading && (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-gray-900"></div>
+                      <div className="loading-spinner-container">
+                        <LoadingSpinner />
                       </div>
                     )}
                     {!isLoading && <img src={Sent} alt="Alt" className="h-7 w-auto" />}

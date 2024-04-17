@@ -13,7 +13,7 @@ const EventDisplay = ({ eventOpen, eventClose }) => {
       snapshot.forEach((doc) => {
         updatedEvents.push({ ...doc.data(), id: doc.id });
       });
-
+      // Sorting events by deadline date
       updatedEvents.sort((a, b) => new Date(a.deadlineDate) - new Date(b.deadlineDate));
 
       setEvents(updatedEvents);
@@ -82,7 +82,7 @@ const EventDisplay = ({ eventOpen, eventClose }) => {
                     {event.deadlineDate}
                   </span>
                   <br />
-                  <span>{event.description}</span>
+                  <span className=" text-sm max-w-prose overflow-y-auto max-h-40">{event.description}</span>
                 </p>
               </div>
               <div className="flex items-center justify-center text-center text-md font-medium w-4/5  mx-auto py-1">

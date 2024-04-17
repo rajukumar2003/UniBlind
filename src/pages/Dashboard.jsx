@@ -46,11 +46,21 @@ const Dashboard = () => {
 				...doc.data(),
 				id: doc.id
 			}));
-			// Sort in descending order by an appropriate field (e.g., 'createdAt')
-			updatedPosts.sort((a, b) => {
-				return b.createdAt.toDate() - a.createdAt.toDate();
-			});
 			
+			updatedPosts.sort((a, b) => {
+				return b.createdAt - a.createdAt;
+			})				
+			
+			// Sort by upvotes (descending) and then by timestamp (descending)
+			// updatedPosts.sort((a, b) => {
+			// 	if (b.upvotes.length !== a.upvotes.length) {
+			// 		return b.upvotes.length - a.upvotes.length;  // Sort by upvotes primarily
+			// 	} else {
+			// 		// Upvotes are equal, sort by timestamp (newest first)
+			// 		return b.createdAt.toDate() - a.createdAt.toDate();
+			// 	}
+			// });
+
 			setPosts(updatedPosts);
 		});
 
@@ -138,6 +148,7 @@ const Dashboard = () => {
 									username={post.username}
 									upvote={post.upvotes}
 									postId={post.id}
+									postOwnerUserId={post.userId}
 									hasUpvoted={post.upvotes.includes(userId)} // Initialize hasUpvoted state
 									handleUpvote={() => handlePostUpvote(post.id)}
 								/>
