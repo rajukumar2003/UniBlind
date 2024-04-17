@@ -89,7 +89,7 @@ const PostCard = ({
           <div
             className={` top-full right-0 bg-white shadow-md rounded p-2 ${isDeleteMenuOpen ? "block" : "hidden"}`}
           >
-            {userId === postOwnerUserId && (
+            {(userId === postOwnerUserId) ?  (
               <div>
                 <Button
                   variant="text"
@@ -100,7 +100,7 @@ const PostCard = ({
                   Delete
                 </Button>
               </div>
-            )}
+            ):(
             <div>
               <Button
                 variant="text"
@@ -111,6 +111,7 @@ const PostCard = ({
                 Report
               </Button>
             </div>
+           )}
           </div>
         </div>
         {/* End of Delete Menu */}
