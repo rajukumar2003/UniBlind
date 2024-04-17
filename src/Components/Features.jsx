@@ -25,11 +25,23 @@ const Features = () => {
         </div>
         <div className=" z-10">
           <div className=" mt-12 grid grid-cols-2 gap-10 lg:w-2/3 md:w-full">
+          <div className="bg-[#176B87] glass bg-opacity-30 py-3 px-4 shadow-md shadow-[#176B87]">
+              <img src={Mask} />
+              <p>
+                <span className="text-[#176B87] font-semibold text-lg">
+                Profile Customization
+                </span>
+                <br />
+                <span className=" text-md text-white font-montserrat ">
+                Users can personalize their profiles by adding photos, bios, and interests, allowing them to showcase their personality and connect with others who share similar interests.
+                </span>
+              </p>
+            </div>
             <div className=" bg-[#176B87] glass bg-opacity-30 py-3 px-4 shadow-md shadow-[#176B87]">
               <img src={Mask} />
               <p>
                 <span className="text-[#176B87] font-semibold text-lg">
-                  Group Chat
+                Group Collaboration
                 </span>
                 <br />
                 <span className=" text-md text-white font-montserrat ">
@@ -45,13 +57,11 @@ const Features = () => {
               <img src={Mask} />
               <p>
                 <span className="text-[#176B87] font-semibold text-lg">
-                  Group Chat
+                Event Discovery
                 </span>
                 <br />
                 <span className=" text-md text-white font-montserrat ">
-                  Enjoy confidential conversations without revealing identity.
-                  Connect with others freely and securely in our new anonymous
-                  chatting feature.
+                Students can explore upcoming campus events, parties, seminars, and social gatherings, stay informed about important dates, and RSVP to events they're interested in attending, enhancing their college experience beyond the classroom.
                 </span>
               </p>
             </div>
@@ -59,30 +69,15 @@ const Features = () => {
               <img src={Mask} />
               <p>
                 <span className="text-[#176B87] font-semibold text-lg">
-                  Group Chat
+                Private Messaging
                 </span>
                 <br />
                 <span className=" text-md text-white font-montserrat ">
-                  Enjoy confidential conversations without revealing identity.
-                  Connect with others freely and securely in our new anonymous
-                  chatting feature.
+                UniConnect provides a secure messaging feature for private conversations between users, enabling seamless communication for sharing updates, making plans, and connecting with classmates and friends in a private setting.
                 </span>
               </p>
             </div>
-            <div className="bg-[#176B87] glass bg-opacity-30 py-3 px-4 shadow-md shadow-[#176B87]">
-              <img src={Mask} />
-              <p>
-                <span className="text-[#176B87] font-semibold text-lg">
-                  Group Chat
-                </span>
-                <br />
-                <span className=" text-md text-white font-montserrat ">
-                  Enjoy confidential conversations without revealing identity.
-                  Connect with others freely and securely in our new anonymous
-                  chatting feature.
-                </span>
-              </p>
-            </div>
+
           </div>
         </div>
       </div>

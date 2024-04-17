@@ -17,7 +17,9 @@ const CodingClub = () => {
   useEffect(() => {
     onValue(messagesRef, (snapshot) => {
       const messageData = snapshot.val();
-      const messageList = messageData ? Object.values(messageData).reverse() : [];
+      const messageList = messageData
+        ? Object.values(messageData).reverse()
+        : [];
       setMessages(messageList);
     });
   }, []);
@@ -28,11 +30,12 @@ const CodingClub = () => {
 
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
-      const chatMessages = chatContainerRef.current.querySelector('.chat-messages');
+      const chatMessages =
+        chatContainerRef.current.querySelector(".chat-messages");
       if (chatMessages) {
         const lastMessage = chatMessages.firstChild;
         if (lastMessage) {
-          lastMessage.scrollIntoView({ behavior: 'smooth' });
+          lastMessage.scrollIntoView({ behavior: "smooth" });
         }
       }
     }
@@ -70,16 +73,6 @@ const CodingClub = () => {
       });
   };
 
-<<<<<<< HEAD
-  return (
-    <div className="chat-container pt-20 pr-2 pl-2 ">
-      <ul className="chat-messages flex flex-col-reverse gap-3 mb-12 ">
-        {messages.map((message, index) => (
-          <li
-            key={message.id || index}
-            className={`message-item ${message.uid === userId ? "self-end" : ""} max-w-sm  
-                            ${message.uid === userId ? "bg-indigo-500 text-white rounded-l-lg" : "bg-gray-200 rounded-r-lg"} break-word p-3 shadow-md`}
-=======
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -93,31 +86,24 @@ const CodingClub = () => {
         {messages.map((message, index) => (
           <li
             key={message.id || index}
-            className={`message-item ${message.uid === userId ? "self-end" : ""} max-w-sm rounded-lg p-3 shadow-md 
+            className={`message-item  ${message.uid === userId ? "self-end" : ""} max-w-sm rounded-lg p-3 shadow-md 
               ${message.uid === userId ? "bg-indigo-500 text-white" : "bg-gray-100 text-gray-800"}`}
->>>>>>> 7e02700d7de9a5017d305af1965c890687681457
           >
+            <div className=" flex justify-between leading-7">
+              <p className=" font-semibold text-sm"> KajuWalaRaju </p>
+              <div className="meta-info flex items-center text-[10px] text-gray-500">
+                <span>{new Date(message.timestamp).toLocaleDateString()}</span>
+                <span className="mx-1">•</span>
+                <span>{new Date(message.timestamp).toLocaleTimeString()}</span>
+              </div>
+            </div>
             {message.isCodeSnippet ? (
-              <pre className="bg-gray-800 text-white rounded p-2">
+              <pre className="bg-gray-800 text-white rounded p-2 w-fit">
                 <code>{message.text}</code>
               </pre>
             ) : (
-              <p>{message.text}</p>
+              <p className=" break-word">{message.text}</p>
             )}
-<<<<<<< HEAD
-            <span
-              className={`time-stamp text-xs
-                            ${message.uid === userId ? "text-gray-300" : "text-gray-600"}`}
-            >
-              {message.time}
-            </span>
-=======
-            <div className="meta-info flex items-center text-xs text-gray-800">
-              <span>{new Date(message.timestamp).toLocaleDateString()}</span>
-              <span className="mx-1">•</span>
-              <span>{new Date(message.timestamp).toLocaleTimeString()}</span>
-            </div>
->>>>>>> 7e02700d7de9a5017d305af1965c890687681457
           </li>
         ))}
       </ul>

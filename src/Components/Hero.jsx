@@ -12,12 +12,12 @@ const Hero = () => {
             Uni
           </span>
           <br />
-          <span className="text-[250px] font-bold m-0 drop-shadow-lg">
+          <span className="text-[250px] font-bold m-0 font-outline-2 drop-shadow-lg">
             Blind
           </span>
         </p>
         <p className="text-[30px] ml-3">
-          Chat Anonymously with your Acquintances
+          Connect Anonymously with your Acquintances
         </p>
         <div className="flex justify-center">
           <button

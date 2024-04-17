@@ -12,6 +12,13 @@
       rgba(134, 182, 246, 1) 50%
     );
   }
+  .gradlol {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.6) 0%,
+      rgba(134, 182, 246, 1) 50%
+    );
+  }
 
   .glass {
     background: rgba(255, 255, 255, 0.2);
@@ -22,7 +29,7 @@
 
   .break-word {
     word-wrap: break-word;
-    overflow-wrap: break-word; 
+    overflow-wrap: break-word;
     hyphens: auto;
   }
 
@@ -59,5 +66,11 @@
   .no-scrollbar {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+  }
+}
+
+@layer base {
+  .font-outline-2 {
+    -webkit-text-stroke: 1px #3759c1;
   }
 }

@@ -43,7 +43,7 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
         </div>
       </div>
       {/*  */}
-      <div className=" grad w-fit mx-auto mt-4 rounded-lg mb-10 opa-black-shad">
+      <div className=" grad w-fit mx-aut o mt-4 rounded-lg mb-10 opa-black-shad">
         <p className="py-4 px-8 text-center text-2xl text-white font-semibold font-montserrat">
           UNIVERSITY
         </p>

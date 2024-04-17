@@ -21,7 +21,7 @@ const Navbar = () => {
               onClick={() => scrollToSection("features")}
               className="text-[#86B6F6] hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium font-montserrat"
             >
-              Features
+              Featuresa
             </button>
           </li>
           <li>
