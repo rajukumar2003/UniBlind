@@ -42,29 +42,31 @@ const SignupPanel = () => {
       alert("Passwords do not match");
       return;
     }
-    
-  // Email Validation-------------------------------------------------------------------
-	const validationResult = validateEmail(email);
-	if (!validationResult.valid) {
-		alert(validationResult.message);
-		return;
-	}
-	
-	  try {
-		  const userId = await handleEmailSignup(email, password);
-		  // await addUserWithRandomUsername(userId, email, setuserId);
-		  // navigate("/dashboard");
-	  } catch (error) {
-		  const errorCode = error.code;
-		  const errorMessage = error.message;
-		  console.log(errorCode, errorMessage);
-	  }
+
+    // Email Validation-------------------------------------------------------------------
+    const validationResult = validateEmail(email);
+    if (!validationResult.valid) {
+      alert(validationResult.message);
+      return;
+    }
+
+    try {
+      const userId = await handleEmailSignup(email, password);
+      // await addUserWithRandomUsername(userId, email, setuserId);
+      // navigate("/dashboard");
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
   };
 
   return (
     <div id="outerpanel" className="flex bg-white rounded-xl m-10 grey-shad">
-      <div id="innerpanel" className="p-4 w-96 max-h-fit">
-        <p className=" font-bold text-[42px] text-center mb-5 font-monasans">Sign Up</p>
+      <div id="innerpanel" className="p-4 w-96 max-sm:w-80 max-h-fit">
+        <p className=" font-bold text-[42px] text-center mb-5 font-monasans">
+          Sign Up
+        </p>
         <form onSubmit={handleSubmit}>
           <div className="relative z-0 w-full mb-4 group">
             <input
