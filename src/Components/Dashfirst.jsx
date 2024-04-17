@@ -17,7 +17,6 @@ import PostForm from "./PostForm";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupOutlined";
 
 const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
-
   const [isEventFormOpen, setIsEventFormOpen] = useState(false);
   const { userId } = useUserContext();
   const navigate = useNavigate();
@@ -30,7 +29,7 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
   };
 
   return (
-    <div>
+    <div className=" max-sm:z-20 ">
       <div className=" flex flex-row mt-[80px] font-medium text-white justify-center">
         <img
           src={GoogleIcon}
@@ -43,15 +42,21 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
         </div>
       </div>
       {/*  */}
-      <div className=" grad w-fit mx-aut o mt-4 rounded-lg mb-10 opa-black-shad">
+      <div className=" grad w-fit mx-auto mt-4 rounded-lg mb-10 opa-black-shad my-auto">
         <p className="py-4 px-8 text-center text-2xl text-white font-semibold font-montserrat">
           UNIVERSITY
         </p>
       </div>
-      <PostForm isOpen={isPostFormOpen} onClose={() => setIsPostFormOpen(false)} />
-      <EventForm isOpen={isEventFormOpen} onClose={() => setIsEventFormOpen(false)} />
+      <PostForm
+        isOpen={isPostFormOpen}
+        onClose={() => setIsPostFormOpen(false)}
+      />
+      <EventForm
+        isOpen={isEventFormOpen}
+        onClose={() => setIsEventFormOpen(false)}
+      />
 
-      <div className=" flex flex-col border-2 border-white m-4 glass rounded-lg">
+      <div className=" flex flex-col border-2 border-white m-4 glass z-0 rounded-lg">
         {/* <div className="flex flex-row mx-3 mt-3 ">
 
           <GroupsOutlinedIcon className=" " />
@@ -84,8 +89,7 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
             Video Meetings
           </p>
         </div>
-        <button
-          onClick={() => setIsPostFormOpen(true)}>
+        <button onClick={() => setIsPostFormOpen(true)}>
           <div className="flex flex-row mx-3 mt-3 ">
             <img
               src={Addpost}
@@ -97,9 +101,8 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
             </p>
           </div>
         </button>
-            {/* Add Event Button  */}
-        <button
-          onClick={() => setIsEventFormOpen(true)}>
+        {/* Add Event Button  */}
+        <button onClick={() => setIsEventFormOpen(true)}>
           <div className="flex flex-row mx-3 mt-3 ">
             <img
               src={Addpost}
@@ -118,7 +121,6 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
         >
           Logout
         </button>
-
       </div>
     </div>
   );

@@ -48,9 +48,7 @@ const Dashthird = () => {
           </p>
       </div>
           </button>
-
-
-
+          
       <div className=" ml-4 flex flex-col no-scrollbar overflow-y-auto h-2/5">
         {events.map((event, index) => (
           <EventCard
