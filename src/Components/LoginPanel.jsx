@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { GoogleIcon } from "../assets/Icons";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase";
-import { signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword} from "firebase/auth";
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../userContext";
 import { handleGoogleSignup } from "./authUtils";
 import { addUserWithRandomUsername } from "./addUserWithRandomName";
-
 
 const LoginPanel = () => {
   const navigate = useNavigate();
@@ -34,7 +37,7 @@ const LoginPanel = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        localStorage.setItem('userId', user.uid); 
+        localStorage.setItem("userId", user.uid);
         navigate("/dashboard");
       })
       .catch((error) => {
@@ -57,13 +60,13 @@ const LoginPanel = () => {
               type="email"
               name="floating_email"
               id="floating_email"
-              className="block py-0.5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              className="block py-1.5 px-2 w-full text-lg text-gray-900 bg-transparent shadow-md rounded-md appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required
             />
             <label
               htmlFor="floating_email"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              className="px-2 peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
               Email address
             </label>
@@ -76,13 +79,13 @@ const LoginPanel = () => {
               type="password"
               name="floating_password"
               id="login_password"
-              className="block py-0.5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              className="block py-2.5 px-2 w-full text-sm text-gray-900 bg-transparent shadow-md rounded-md appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required
             />
             <label
               htmlFor="floating_password"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              className="px-2 peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
               Password
             </label>
@@ -104,29 +107,31 @@ const LoginPanel = () => {
                 Remember me
               </label>
             </div>
-            <Link to="/forgotpassword" className=" underline text-xs">
+            <Link
+              to="/forgotpassword"
+              className=" underline text-xs text-gray-500"
+            >
               Forgot Password?
             </Link>
           </div>
           <div className="flex flex-col items-center">
             <button
               type="submit"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="leading-none text-white bg-[#86B6F6] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-[16.29px] px-5 py-2.5 text-center font-montserrat font-semibold w-[120px] h-[45px]"
             >
               Login
             </button>
             <div className="flex items-center justify-center text-center text-md font-medium w-4/5  mx-auto py-1">
-              <span className="w-full border-b-2 border-black inline-block"></span>
-              <span className="mx-4">OR</span>
-              <span className="w-full border-b-2 border-black inline-block"></span>
+              <span className="w-full border-b-2 border-[#A8A8A8] inline-block"></span>
+              <span className="mx-4 text-[#A8A8A8]">OR</span>
+              <span className="w-full border-b-2 border-[#A8A8A8] inline-block"></span>
             </div>
             <button
               onClick={googleSignIn}
-              type="submit"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="text-white bg-[#86B6F6] focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-[14px] text-center font-montserrat leading-none w-[265px] h-[43px]"
             >
-              <div className="flex">
-                Login with Google
+              <div className="flex justify-center">
+                <span className="my-auto">Continue with Google</span>
                 <img
                   src={GoogleIcon}
                   alt="Google Icon"
@@ -139,7 +144,7 @@ const LoginPanel = () => {
           </div>
         </form>
 
-        <p className=" mt-3 border-t-2 border-black text-sm">
+        <p className=" mt-3 border-t-2 border-[#A8A8A8] text-sm text-[#A8A8A8] font-medium">
           New User?{" "}
           <Link to="/signup" className=" underline">
             Sign Up
