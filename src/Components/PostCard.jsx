@@ -9,7 +9,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { IconButton, Button } from "@mui/material";
 import { useState } from "react";
-import { doc, deleteDoc } from "firebase/firestore";
+import { doc, deleteDoc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
 const PostCard = ({ imgURL, title, message, upvote, username, postId, postOwnerUserId, handleUpvote }) => {
@@ -46,8 +46,17 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, postOwnerU
       return;
     }
     try {
+      const postRef = doc(db, 'posts', postId);
+      const postSnap = await getDoc(postRef);
+      const { reports } = postSnap.data();
+      if (reports > 2) {
+        await deleteDoc(postRef);
+        alert('Post deleted due to multiple reports');
+        return;
+      }
+      await updateDoc(postRef, { reports : reports + 1});
+      
       alert('Post reported successfully');
-      // ... (Local state update if needed) ...  
     } catch (error) {
       console.error('Error reporting post:', error);
     }
@@ -86,14 +95,13 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, postOwnerU
         </div>
       </div>
       {/* Delete Menu */}
-        <div className="flex items-center justify-end">
-          <IconButton onClick={toggleDeleteMenu}>
-            <MoreVertIcon fontSize="small" />
+        <div className="flex flex-row-reverse object-right">
+          <IconButton onClick={toggleDeleteMenu} >
+            <MoreVertIcon fontSize="small"/>
           </IconButton>
 
-          {/* Consider using Menu and MenuItem components for a more robust menu */}
-          <div className={` top-full right-0 bg-white shadow-md rounded p-2 ${isDeleteMenuOpen ? 'block' : 'hidden'}`}>
-          {userId === postOwnerUserId && (
+          <div className={` left-0 bg-white shadow-md rounded p-2 ${isDeleteMenuOpen ? 'block' : 'hidden'}`}>
+          {userId === postOwnerUserId ? (
             <div>
               <Button
                 variant="text"
@@ -104,17 +112,18 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, postOwnerU
                 Delete
               </Button>
             </div>
-          )}
+          ) :
             <div >
-            <Button
-              variant="text"
-              color="error"
-              startIcon={<Report />}
-              onClick={handleReport}
-            >
-              Report
+              <Button
+                variant="text"
+                color="error"
+                startIcon={<Report />}
+                onClick={handleReport}
+              >
+                Report
               </Button>
-              </div>
+            </div>
+          }
           </div>
         </div>
       {/* End of Delete Menu */}
