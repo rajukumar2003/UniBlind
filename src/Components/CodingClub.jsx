@@ -3,35 +3,51 @@ import { ref, onValue, push } from "firebase/database";
 import { realtimeDB } from "../firebase";
 import { useUserContext } from "../userContext";
 import CodeSnippetModal from "./CodeSnippetModal";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+import Avatar from '@mui/material/Avatar';
+
 
 const CodingClub = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [isCodeSnippetModalOpen, setIsCodeSnippetModalOpen] = useState(false);
   const [codeSnippetText, setCodeSnippetText] = useState("");
+  const [username, setUsername] = useState("");
+  const [userProfilePic, setUserProfilePic] = useState();
 
   const { userId } = useUserContext();
   const messagesRef = ref(realtimeDB, "messages");
   const chatContainerRef = useRef(null);
 
   useEffect(() => {
-    onValue(messagesRef, (snapshot) => {
-      const messageData = snapshot.val();
-      const messageList = messageData
-        ? Object.values(messageData).reverse()
-        : [];
-      setMessages(messageList);
-    });
-  }, []);
+    const fetchData = async () => {
+      try {
+        const userData = await fetchUserData(userId);
+        setUsername(userData.username);
+        // setUserProfilePic(userData.profilePic);
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+        onValue(messagesRef, (snapshot) => {
+          const messageData = snapshot.val();
+          const messageList = messageData
+            ? Object.values(messageData).reverse()
+            : [];
+          setMessages(messageList);
+
+          scrollToBottom();
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, [userId]);
 
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
-      const chatMessages =
-        chatContainerRef.current.querySelector(".chat-messages");
+      const chatMessages = chatContainerRef.current.querySelector(
+        ".chat-messages"
+      );
       if (chatMessages) {
         const lastMessage = chatMessages.firstChild;
         if (lastMessage) {
@@ -45,6 +61,8 @@ const CodingClub = () => {
     e.preventDefault();
     const messageObject = {
       uid: userId,
+      username: username,
+      // userProfilePic: userProfilePic,
       text: codeSnippetText,
       timestamp: Date.now(),
       isCodeSnippet: true,
@@ -62,6 +80,8 @@ const CodingClub = () => {
     e.preventDefault();
     if (!newMessage.trim()) return;
     const messageObject = {
+      username: username,
+      // userProfilePic: userProfilePic,
       uid: userId,
       text: newMessage,
       timestamp: Date.now(),
@@ -80,15 +100,40 @@ const CodingClub = () => {
     }
   };
 
+  async function fetchUserData(userId) {
+    const db = getFirestore();
+    const userDocRef = doc(db, "users", userId);
+    const userDocSnap = await getDoc(userDocRef);
+    if (userDocSnap.exists()) {
+      return userDocSnap.data();
+    } else {
+      return null;
+    }
+  }
+
   return (
     <div className="chat-container pt-20 pr-2 pl-2" ref={chatContainerRef}>
       <ul className="chat-messages flex flex-col-reverse gap-3 overflow-y-auto mb-12">
         {messages.map((message, index) => (
           <li
             key={message.id || index}
-            className={`message-item  ${message.uid === userId ? "self-end" : ""} max-w-sm rounded-lg p-3 shadow-md 
-              ${message.uid === userId ? "bg-indigo-500 text-white" : "bg-gray-100 text-gray-800"}`}
+            className={`message-item  ${message.uid === userId ? "self-end" : ""
+              } max-w-sm rounded-lg p-3 shadow-md 
+              ${message.uid === userId
+                ? "bg-indigo-500 text-white"
+                : "bg-gray-100 text-gray-800"
+              }`}
           >
+            <div className="flex items-center justify-start mb-1">
+              {message.uid !== userId && (
+                <Avatar
+                  color="sucess"
+                  size="md"
+                  variant="solid"
+                />
+              )}
+              <h2 className="font-semibold text-sm ml-3">{message.username}</h2>
+            </div>
             {message.isCodeSnippet ? (
               <pre className="bg-gray-800 text-white rounded p-2 w-fit">
                 <code>{message.text}</code>
@@ -96,10 +141,8 @@ const CodingClub = () => {
             ) : (
               <p>{message.text}</p>
             )}
-            <div className="meta-info flex items-center text-xs text-gray-800">
-              <span>{new Date(message.timestamp).toLocaleDateString()}</span>
-              <span className="mx-1">•</span>
-              <span>{new Date(message.timestamp).toLocaleTimeString()}</span>
+            <div className=" mt-2 text-xs text-gray-900">
+              {new Date(message.timestamp).toLocaleTimeString()}
             </div>
           </li>
         ))}

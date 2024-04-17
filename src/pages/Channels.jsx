@@ -8,7 +8,7 @@ import { Logo } from "../assets/Icons";
 import { IoSearchSharp } from "react-icons/io5";
 
 const Channels = () => {
-  const [selectedChannel, setSelectedChannel] = useState("Announcement");
+  const [selectedChannel, setSelectedChannel] = useState("Coding Club");
   const [channelsData, setChannelsData] = useState([
     { name: "Announcement", id: "announcement" },
     { name: "Confessions", id: "confessions" },

@@ -36,6 +36,7 @@ const  EventForm= ({ isOpen, onClose }) => {
                 imageUrl = await getDownloadURL(imageRef);
             } catch (error) {
                 console.error("Error uploading image:", error);
+                alert("Error uploading image. Please try again.");
                 //  image upload error (e.g., display alert)
                 return;
             }
