@@ -4,6 +4,7 @@ import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import Checkbox from "@mui/material/Checkbox";
 import DeleteIcon from '@mui/icons-material/Delete';
+import Report from '@mui/icons-material/Report';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { IconButton, Button } from "@mui/material";
@@ -28,9 +29,7 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, postOwnerU
 
   const handleDeleteClick = async () => {
     if (!window.confirm('Are you sure you want to delete this post?')) {
-      return;
-    }
-
+      return;}
     try {
       const postRef = doc(db, 'posts', postId);
       await deleteDoc(postRef);
@@ -42,6 +41,21 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, postOwnerU
     setIsDeleteMenuOpen(false);
   };
 
+  const handleReport = async () => {
+    if (!window.confirm('Are you sure you want to report this post?')) {
+      return;
+    }
+    try {
+      alert('Post reported successfully');
+      // ... (Local state update if needed) ...  
+    } catch (error) {
+      console.error('Error reporting post:', error);
+    }
+    setIsDeleteMenuOpen(false);
+  };
+
+
+  
   return (
     <div className=" p-4 pb-2 mb-3 w-full h-full">
       <h1 className="text-md text-slate-gray font-semibold">{username}</h1>
@@ -72,7 +86,6 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, postOwnerU
         </div>
       </div>
       {/* Delete Menu */}
-      {userId === postOwnerUserId && ( // Check if the current user is the owner of the post
         <div className="flex items-center justify-end">
           <IconButton onClick={toggleDeleteMenu}>
             <MoreVertIcon fontSize="small" />
@@ -80,17 +93,32 @@ const PostCard = ({ imgURL, title, message, upvote, username, postId, postOwnerU
 
           {/* Consider using Menu and MenuItem components for a more robust menu */}
           <div className={` top-full right-0 bg-white shadow-md rounded p-2 ${isDeleteMenuOpen ? 'block' : 'hidden'}`}>
+          {userId === postOwnerUserId && (
+            <div>
+              <Button
+                variant="text"
+                color="error"
+                startIcon={<DeleteIcon />}
+                onClick={handleDeleteClick}
+              >
+                Delete
+              </Button>
+            </div>
+          )}
+            <div >
             <Button
               variant="text"
               color="error"
-              startIcon={<DeleteIcon />}
-              onClick={handleDeleteClick}
+              startIcon={<Report />}
+              onClick={handleReport}
             >
-              Delete
-            </Button>
+              Report
+              </Button>
+              </div>
           </div>
         </div>
-      )}
+      {/* End of Delete Menu */}
+      
       <div className="mt-3 justify-start">
         <button
           onClick={() => {
