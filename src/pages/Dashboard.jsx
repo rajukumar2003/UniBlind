@@ -81,6 +81,17 @@ const Dashboard = () => {
       setPosts(updatedPosts);
     });
 
+	// Fetching Username-------------------------------------------------------------------
+	async function fetchUsername(userId) {
+		const db = getFirestore();
+		const userDocRef = doc(db, "users", userId);
+		const userDocSnap = await getDoc(userDocRef);
+		if (userDocSnap.exists()) {
+			return userDocSnap.data().username;
+		} else {
+			return null;
+		}
+	}
     return () => unsubscribe();
   }, []);
 
