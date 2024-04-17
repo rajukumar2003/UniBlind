@@ -106,16 +106,16 @@ const EventForm = ({ isOpen, onClose }) => {
 
   return (
     <div
-      className={`max-sm:z-10 fixed top-0 left-0 w-screen h-full bg-black bg-opacity-50 flex items-center justify-center ${
+      className={`max-sm:z-10 fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center ${
         isOpen ? "block" : "hidden"
       }`}
     >
-      <div className="glass rounded-lg z-0 w-[90%]">
+      <div className="glass rounded-lg z-0 max-sm:w-11/12">
         <div className=" m-2 bg-white shad bg-opacity-90 flex flex-col rounded-lg">
           <h2 className="py-3 text-2xl font-semibold text-center">
             Add Upcoming Event
           </h2>
-          <div className=" py-4 border-t-[1px] border-black flex flex-row max-sm:flex-col">
+          <div className=" py-4 border-t-[1px] border-black flex flex-row max-sm:flex-col ">
             <div className="image-preview-container w-[300px] h-auto p-2 flex items-center max-sm:mx-auto justify-center">
               {imagePreview && (
                 <img
@@ -126,7 +126,7 @@ const EventForm = ({ isOpen, onClose }) => {
               )}
             </div>
 
-            <div className="content-container p-2">
+            <div className="content-container sm:w-[400px] p-2">
               <button
                 className="absolute top-3 right-3 text-2xl font-semibold"
                 onClick={() => {

@@ -50,7 +50,7 @@ const EventDisplay = ({ eventOpen, eventClose }) => {
     >
       <div
         id="lmao"
-        className="bg-white bg-opacity-90 m-2  glass shad w-11/12 h-5/6 rounded-xl overflow-auto no-scrollbar overflow-y-auto"
+        className="bg-white bg-opacity-90 m-2  glass shad w-2/3 h-5/6 max-sm:w-11/12 max-sm:h-5/6 rounded-xl overflow-auto no-scrollbar overflow-y-auto"
       >
         <p className="fixed z-20 w-full text-center border-b border-black rounded-t-xl text-2xl font-bold font-montserrat">
           Events

@@ -63,7 +63,7 @@ const PostForm = ({ isOpen, onClose }) => {
         username: username,
         userId: userId,
         upvotes: [],
-        reports: 0 
+        reports: 0,
       });
       // Reset form
       setTitle("");
@@ -107,7 +107,7 @@ const PostForm = ({ isOpen, onClose }) => {
     <div
       className={`max-sm:z-10 fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center ${isOpen ? "block" : "hidden"}`}
     >
-      <div className="glass rounded-lg z-0">
+      <div className="glass rounded-lg z-0 max-sm:w-11/12">
         <div className=" m-2 bg-white shad bg-opacity-90 flex flex-col rounded-lg">
           <h2 className="py-3 text-2xl font-semibold text-center">NEW POST</h2>
           <div className=" py-4 border-t-[1px] border-black flex flex-row max-sm:flex-col ">
@@ -121,7 +121,7 @@ const PostForm = ({ isOpen, onClose }) => {
               )}
             </div>
 
-            <div className="content-container w-[400px] p-2">
+            <div className="content-container sm:w-[400px] p-2">
               <button
                 className="absolute top-3 right-3 text-2xl font-semibold"
                 onClick={() => {
