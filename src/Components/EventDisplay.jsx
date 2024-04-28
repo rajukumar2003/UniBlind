@@ -59,22 +59,22 @@ const EventDisplay = ({ eventOpen, eventClose }) => {
           {events.map((event, index) => (
             <div className=" h-full py-3" key={index}>
               <div className="flex justify-center">
-                {event.imagePath.split("?")[0].endsWith(".pdf") ? (
-                  <iframe
-                    src={event.imagePath}
-                    type="event/pdf"
-                    className="object-contain h-[350px] w-[500px]"
-                  />
-                ) : (
-                  <img
-                    src={event.imagePath}
-                    className={`object-contain h-[350px] w-[500px] ${
-                      isImageClicked ? "w-[600px] h-[800px]" : ""
-                    }`}
-                    alt="Event"
-                    onClick={toggleImgeClick}
-                  />
-                )}
+                {event.imagePath &&
+                  (event.imagePath.split("?")[0].endsWith(".pdf") ? (
+                    <iframe
+                      src={event.imagePath}
+                      type="event/pdf"
+                      className="object-contain h-[350px] w-[500px]"
+                    />
+                  ) : (
+                    <img
+                      src={event.imagePath}
+                      className={`object-contain h-[350px] w-[500px] ${isImageClicked ? "w-[600px] h-[800px]" : ""
+                        }`}
+                      alt="Event"
+                      onClick={toggleImgeClick}
+                    />
+                  ))}
               </div>
               <div className="text-center mb-5">
                 <p className="font-montserrat">

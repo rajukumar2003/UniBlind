@@ -1,10 +1,18 @@
-import { collection, query, where, getDocs, doc, setDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { generateRandomUsername } from '../anonymousNames';
 
 // Function to add user with random username------------------------------------------
 export async function addUserWithRandomUsername(uid, email) {
+    // Checking if a document already exists for this uid
+    const userDocRef = doc(db, "users", uid);
+    const userDocSnap = await getDoc(userDocRef);
 
+    if (userDocSnap.exists()) {
+        console.error('User with this UID already exists!');
+        return;
+    }
+    
     let generatedUsername = generateRandomUsername();
     let isUsernameUnique = false;
     // Checking if username is unique
@@ -22,7 +30,6 @@ export async function addUserWithRandomUsername(uid, email) {
     }
 
     // Adding user to database 
-    const userDocRef = doc(db, "users", uid);
     await setDoc(userDocRef, {
         email: email,
         username: generatedUsername,

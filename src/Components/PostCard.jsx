@@ -59,7 +59,7 @@ const PostCard = ({
       const postRef = doc(db, 'posts', postId);
       const postSnap = await getDoc(postRef);
       const { reports } = postSnap.data();
-      if (reports > 2) {
+      if (reports > 1) {
         await deleteDoc(postRef);
         alert('Post deleted due to multiple reports');
         return;
