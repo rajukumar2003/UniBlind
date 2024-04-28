@@ -11,7 +11,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 const Channels = () => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
 
-  const [selectedChannel, setSelectedChannel] = useState("Coding Club");
+  const [selectedChannel, setSelectedChannel] = useState("Announcement");
   const [channelsData, setChannelsData] = useState([
     { name: "Announcement", id: "announcement" },
     { name: "Confessions", id: "confessions" },

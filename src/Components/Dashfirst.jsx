@@ -25,6 +25,7 @@ const Dashfirst = ({ username, isPostFormOpen, setIsPostFormOpen }) => {
   // Logout Button
   const logoutButton = async () => {
     await signOut(auth);
+    localStorage.removeItem("userId");
     navigate("/");
   };
 
