@@ -4,8 +4,8 @@ import { realtimeDB } from "../firebase";
 import { useUserContext } from "../userContext";
 import CodeSnippetModal from "./CodeSnippetModal";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
-import Avatar from '@mui/material/Avatar';
-
+import { IoSendSharp } from "react-icons/io5";
+import Avatar from "@mui/material/Avatar";
 
 const CodingClub = () => {
   const [messages, setMessages] = useState([]);
@@ -45,9 +45,8 @@ const CodingClub = () => {
 
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
-      const chatMessages = chatContainerRef.current.querySelector(
-        ".chat-messages"
-      );
+      const chatMessages =
+        chatContainerRef.current.querySelector(".chat-messages");
       if (chatMessages) {
         const lastMessage = chatMessages.firstChild;
         if (lastMessage) {
@@ -117,20 +116,18 @@ const CodingClub = () => {
         {messages.map((message, index) => (
           <li
             key={message.id || index}
-            className={`message-item  ${message.uid === userId ? "self-end" : ""
-              } max-w-sm rounded-lg p-3 shadow-md 
-              ${message.uid === userId
-                ? "bg-indigo-500 text-white"
-                : "bg-gray-100 text-gray-800"
+            className={`message-item  ${
+              message.uid === userId ? "self-end" : ""
+            } max-w-sm rounded-lg p-3 shadow-md 
+              ${
+                message.uid === userId
+                  ? "bg-indigo-500 text-white"
+                  : "bg-gray-100 text-gray-800"
               }`}
           >
             <div className="flex items-center justify-start mb-1">
               {message.uid !== userId && (
-                <Avatar
-                  color="sucess"
-                  size="md"
-                  variant="solid"
-                />
+                <Avatar color="sucess" size="md" variant="solid" />
               )}
               <h2 className="font-semibold text-sm ml-3">{message.username}</h2>
             </div>
@@ -148,7 +145,7 @@ const CodingClub = () => {
         ))}
       </ul>
 
-      <div className="flex w-[78%] fixed bottom-0">
+      <div className="flex w-[78%] max-sm:w-full fixed bottom-0">
         <input
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
@@ -157,18 +154,18 @@ const CodingClub = () => {
           placeholder="Type your message..."
           className="flex-1 p-2 border border-gray-300 focus:outline-none focus:ring-indigo-500"
         />
-        <div className="rounded-lg border-2 border-white">
+        <div className="rounded-lg">
           <button
-            className="bg-black text-white p-2 rounded-l-lg hover:bg-indigo-500 transition-colors duration-200"
+            className="bg-black text-white p-2 rounded-l-lg hover:bg-indigo-500 transition-colors duration-200 max-sm:h-full"
             onClick={() => setIsCodeSnippetModalOpen(true)}
           >
             Add Code Snippet
           </button>
           <button
             onClick={handleSubmit}
-            className="bg-green-800 text-white rounded-r-lg p-2 border-l-2 border-white hover:bg-indigo-500 transition-colors duration-200"
+            className="bg-green-800 text-white rounded-r-lg max-sm:h-full p-2 hover:bg-indigo-500 transition-colors duration-200"
           >
-            Send
+            <IoSendSharp />
           </button>
         </div>
       </div>

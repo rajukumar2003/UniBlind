@@ -6,8 +6,11 @@ import CodingClub from "../Components/CodingClub";
 import Announcement from "../Components/Announcement";
 import { Logo } from "../assets/Icons";
 import { IoSearchSharp } from "react-icons/io5";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const Channels = () => {
+  const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
+
   const [selectedChannel, setSelectedChannel] = useState("Coding Club");
   const [channelsData, setChannelsData] = useState([
     { name: "Announcement", id: "announcement" },
@@ -16,11 +19,15 @@ const Channels = () => {
   ]);
   const navigate = useNavigate();
 
-  
+  const toggleHamburgerMenu = () => {
+    setIsHamburgerOpen(!isHamburgerOpen);
+  };
 
   return (
     <div className="channels-container h-screen bg-gray-100 flex ">
-      <div className="channels-list-wrapper flex flex-col items-start p-4 w-1/5 shadow-md bg-black">
+      <div
+        className={`channels-list-wrapper flex flex-col items-start pr-4 pb-4 w-[350px] shadow-md bg-black ${isHamburgerOpen ? "block  " : "max-sm:hidden"}`}
+      >
         <div className=" w-full mb-1">
           <button
             onClick={() => {
@@ -34,14 +41,14 @@ const Channels = () => {
           </h2>
         </div>
 
-        <div className="w-[80%] pt-2 relative ml-5 text-gray-600">
+        <div className="w-full pt-2 relative ml-5 text-gray-600">
           <input
-            className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
+            className="border-2 w-4/5 border-gray-300 bg-white h-10 px-5 pr-1 rounded-lg text-sm focus:outline-none"
             type="search"
             name="search"
             placeholder="Search"
           />
-          <button type="submit" className="absolute right-0 top-0 mt-5">
+          <button type="submit" className="absolute right-0 top-0 mt-5 mr-5">
             <IoSearchSharp />
           </button>
         </div>
@@ -60,9 +67,12 @@ const Channels = () => {
       </div>
 
       <div className="message-area flex-1 overflow-y-auto relative">
-        <h2 className="text-3xl font-bold mb-4 fixed z-10 w-full bg-black p-4 font-montserrat text-white">
-          {selectedChannel}
-        </h2>
+        <div className="flex flex-row-reverse justify-between text-3xl font-bold mb-4 fixed z-10 w-full bg-black p-4 font-montserrat text-white max-sm:text-right">
+          <p>{selectedChannel}</p>
+          <button onClick={toggleHamburgerMenu}>
+            <GiHamburgerMenu className="text-3xl text-white ml-2 mt-2 mb-2 max-sm:z-0 sm:hidden" />
+          </button>
+        </div>
 
         {selectedChannel === "Announcement" && <Announcement />}
         {selectedChannel === "Confessions" && <Confession />}
